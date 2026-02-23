@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dunning-Kruger Derby — Daily Confidence Calibration Game</title>
+  <meta name="description" content="Think you know what you know? Dunning-Kruger Derby is a daily confidence calibration game built on peer-reviewed neuroscience. Rate your certainty. See where your overconfidence begins.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== RESET ===== */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ===== CUSTOM PROPERTIES ===== */
+    :root {
+      --cream: #F5F1EB;
+      --orange: #E67E22;
+      --orange-dark: #C0392B;
+      --blue: #667eea;
+      --dark: #2C2C2C;
+      --text: #1a1a1a;
+      --muted: #6c757d;
+      --card-bg: #FFFFFF;
+
+      --font-heading: 'Fraunces', serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+
+      --radius: 8px;
+      --radius-lg: 16px;
+      --max-width: 1100px;
+      --section-pad: 80px;
+    }
+
+    /* ===== BASE ===== */
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; }
+    h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 600; line-height: 1.2; }
+
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 16px 0;
+    }
+    .nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-wordmark {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--orange);
+    }
+    .nav-cta {
+      background: var(--orange);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--orange-dark); }
+
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: none;
+      width: 32px;
+      height: 32px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text);
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .nav-mobile-menu { display: none; }
+
+    @media (max-width: 600px) {
+      .nav-cta.desktop-cta { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-mobile-menu {
+        display: none;
+        padding: 16px 0 8px;
+      }
+      .nav-mobile-menu.open { display: block; }
+      .nav-mobile-menu .nav-cta {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 14px 24px;
+      }
+      .nav .container { flex-wrap: wrap; }
+      .nav-mobile-menu { width: 100%; }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      padding: var(--section-pad) 0;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      margin-bottom: 24px;
+      font-weight: 600;
+    }
+    .hero-sub {
+      font-size: 1.15rem;
+      max-width: 640px;
+      margin: 0 auto 32px;
+      color: var(--text);
+      line-height: 1.7;
+    }
+    .hero-cta {
+      background: var(--orange);
+      color: #fff;
+      padding: 14px 36px;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background 0.2s;
+      display: inline-block;
+    }
+    .hero-cta:hover { background: var(--orange-dark); }
+    .hero-proof {
+      margin-top: 24px;
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* DK Curve */
+    .dk-curve-wrapper {
+      max-width: 600px;
+      margin: 56px auto 0;
+    }
+    .dk-curve-wrapper svg {
+      width: 100%;
+      height: auto;
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    .how-it-works {
+      padding: var(--section-pad) 0;
+    }
+    .how-it-works h2 {
+      text-align: center;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      margin-bottom: 56px;
+    }
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+    .step {
+      text-align: center;
+      padding: 32px 24px;
+    }
+    .step-number {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--orange);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+    }
+    .step-icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+    }
+    .step-icon svg {
+      width: 100%;
+      height: 100%;
+    }
+    .step h3 {
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+    }
+    .step p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    @media (max-width: 768px) {
+      .steps { grid-template-columns: 1fr; gap: 16px; }
+    }
+
+    /* ===== THE SCIENCE ===== */
+    .science {
+      padding: var(--section-pad) 0;
+      background: var(--card-bg);
+    }
+    .science h2 {
+      text-align: center;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      margin-bottom: 24px;
+    }
+    .science-intro {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 56px;
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .pillar {
+      background: var(--cream);
+      padding: 32px;
+      border-radius: var(--radius-lg);
+    }
+    .pillar h3 {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+      color: var(--orange);
+    }
+    .pillar p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    @media (max-width: 768px) {
+      .pillars { grid-template-columns: 1fr; }
+    }
+
+    /* ===== RESEARCH CITATIONS ===== */
+    .research {
+      padding: var(--section-pad) 0;
+    }
+    .research h2 {
+      text-align: center;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      margin-bottom: 48px;
+    }
+    .carousel-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+    .carousel-track {
+      display: flex;
+      gap: 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      padding-bottom: 8px;
+    }
+    .carousel-track::-webkit-scrollbar { display: none; }
+    a.citation-card {
+      flex: 0 0 320px;
+      background: var(--card-bg);
+      border-left: 4px solid var(--orange);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      scroll-snap-align: start;
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    a.citation-card:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      transform: translateY(-2px);
+    }
+    .citation-journal {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--orange);
+      margin-bottom: 10px;
+    }
+    .citation-title {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .citation-authors {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .citation-summary {
+      font-size: 0.88rem;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .carousel-nav {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .carousel-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      background: var(--card-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.2s;
+    }
+    .carousel-btn:hover { border-color: var(--orange); }
+    .carousel-btn svg { width: 16px; height: 16px; }
+
+    /* ===== WHO IS THIS FOR ===== */
+    .audience {
+      padding: var(--section-pad) 0;
+      background: var(--card-bg);
+    }
+    .audience h2 {
+      text-align: center;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      margin-bottom: 56px;
+    }
+    .audience-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .audience-card {
+      text-align: center;
+      padding: 32px 24px;
+    }
+    .audience-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+    }
+    .audience-card p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    @media (max-width: 768px) {
+      .audience-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== ABOUT THE CREATOR ===== */
+    .creator {
+      padding: var(--section-pad) 0;
+    }
+    .creator h2 {
+      text-align: center;
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      margin-bottom: 48px;
+    }
+    .creator-content {
+      display: flex;
+      gap: 48px;
+      align-items: flex-start;
+    }
+    .creator-photo {
+      flex-shrink: 0;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--orange);
+    }
+    .creator-text p {
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .creator-link {
+      color: var(--orange);
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .creator-link:hover { color: var(--orange-dark); }
+    @media (max-width: 768px) {
+      .creator-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+    }
+
+    /* ===== EARLY ACCESS CTA ===== */
+    .early-access {
+      padding: var(--section-pad) 0;
+      background: var(--card-bg);
+      text-align: center;
+    }
+    .early-access h2 {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      margin-bottom: 16px;
+    }
+    .early-access-sub {
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 540px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+    .early-access-cta {
+      background: var(--orange);
+      color: #fff;
+      padding: 14px 36px;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .early-access-cta:hover { background: var(--orange-dark); }
+
+    /* ===== EXIT ALERT ===== */
+    .exit-alert-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(0, 0, 0, 0.5);
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .exit-alert-overlay.open { display: flex; }
+    .exit-alert {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+    .exit-alert-icon {
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+    }
+    .exit-alert h4 {
+      font-size: 1.15rem;
+      margin-bottom: 8px;
+    }
+    .exit-alert-title {
+      font-family: var(--font-heading);
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--orange);
+      margin-bottom: 4px;
+    }
+    .exit-alert-journal {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+    .exit-alert-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+    }
+    .exit-alert-go {
+      background: var(--orange);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .exit-alert-go:hover { background: var(--orange-dark); }
+    .exit-alert-cancel {
+      background: none;
+      color: var(--muted);
+      padding: 10px 24px;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .exit-alert-cancel:hover { color: var(--text); }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.5);
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--card-bg);
+      border-radius: var(--radius-lg);
+      padding: 40px 36px;
+      max-width: 460px;
+      width: 100%;
+      position: relative;
+    }
+    .modal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      font-size: 1.4rem;
+      color: var(--muted);
+      line-height: 1;
+      padding: 4px;
+    }
+    .modal-close:hover { color: var(--text); }
+    .modal h3 {
+      font-size: 1.5rem;
+      margin-bottom: 24px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      border-radius: var(--radius);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      background: var(--cream);
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: var(--orange);
+    }
+    .form-group .error-text {
+      font-size: 0.8rem;
+      color: var(--orange-dark);
+      margin-top: 4px;
+      display: none;
+    }
+    .form-group.has-error .error-text { display: block; }
+    .form-group.has-error input,
+    .form-group.has-error select { border-color: var(--orange-dark); }
+    .modal-submit {
+      width: 100%;
+      background: var(--orange);
+      color: #fff;
+      padding: 14px;
+      border-radius: var(--radius);
+      font-size: 1rem;
+      font-weight: 500;
+      transition: background 0.2s;
+      margin-bottom: 12px;
+    }
+    .modal-submit:hover { background: var(--orange-dark); }
+    .modal-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .modal-micro {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    .modal-message {
+      text-align: center;
+      padding: 16px 0;
+      font-size: 0.95rem;
+      display: none;
+    }
+    .modal-message.success { color: var(--orange); display: block; }
+    .modal-message.error { color: var(--orange-dark); display: block; }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--dark);
+      color: #fff;
+      padding: 48px 0 24px;
+    }
+    .footer-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .footer-wordmark {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--orange);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--orange); }
+    .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    @media (max-width: 768px) {
+      .footer-main {
+        flex-direction: column;
+        text-align: center;
+      }
+      .footer-links { justify-content: center; }
+    }
+
+    /* ===== UTILITY ===== */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="container">
+      <a href="index.html" class="nav-wordmark">DK Derby</a>
+      <button class="nav-cta desktop-cta" onclick="openModal()" aria-label="Get Early Access">Get Early Access</button>
+      <button class="nav-hamburger" onclick="toggleMobileMenu()" aria-label="Toggle menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-mobile-menu" id="mobileMenu">
+        <button class="nav-cta" onclick="openModal()">Get Early Access</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <h1>Think you know what you know?</h1>
+      <p class="hero-sub">Dunning-Kruger Derby is a daily confidence calibration game. Rate your certainty before you answer. See exactly where your knowledge ends and your overconfidence begins.</p>
+      <button class="hero-cta" onclick="openModal()">Join Early Access</button>
+      <p class="hero-proof">Built on peer-reviewed neuroscience. Designed to humble you gently.</p>
+
+      <!-- DK Curve SVG -->
+      <div class="dk-curve-wrapper" aria-label="The Dunning-Kruger effect curve showing confidence versus competence">
+        <svg viewBox="0 0 560 340" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Dunning-Kruger effect curve">
+          <!-- Axes -->
+          <line x1="60" y1="280" x2="530" y2="280" stroke="#2C2C2C" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="60" y1="280" x2="60" y2="30" stroke="#2C2C2C" stroke-width="1.5" stroke-linecap="round"/>
+
+          <!-- Axis labels -->
+          <text x="295" y="310" text-anchor="middle" font-family="'Space Mono', monospace" font-size="11" fill="#6c757d">Competence</text>
+          <text x="20" y="155" text-anchor="middle" font-family="'Space Mono', monospace" font-size="11" fill="#6c757d" transform="rotate(-90, 20, 155)">Confidence</text>
+
+          <!-- The DK Curve - hand-sketched feel with slight imperfections -->
+          <path d="M 75 265 C 85 260, 100 220, 120 140 C 135 80, 155 52, 175 48 C 195 44, 210 55, 230 100 C 250 145, 265 195, 290 230 C 310 255, 330 262, 350 255 C 370 248, 395 220, 420 180 C 445 140, 470 105, 500 80 C 510 72, 515 68, 520 65"
+                stroke="#2C2C2C"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                fill="none"
+                style="filter: url(#sketch)"/>
+
+          <!-- Mount Stupid label -->
+          <text x="175" y="32" text-anchor="middle" font-family="'Fraunces', serif" font-size="13" font-style="italic" fill="#E67E22">Mount Stupid</text>
+          <text x="175" y="44" text-anchor="middle" font-size="12">&#9873;</text>
+
+          <!-- Valley of Despair label -->
+          <text x="300" y="270" text-anchor="middle" font-family="'Space Mono', monospace" font-size="9" fill="#6c757d">Valley of Despair</text>
+
+          <!-- Slope of Enlightenment label -->
+          <text x="460" y="62" text-anchor="middle" font-family="'Space Mono', monospace" font-size="9" fill="#6c757d">Slope of Enlightenment</text>
+
+          <!-- Sketch filter for hand-drawn feel -->
+          <defs>
+            <filter id="sketch">
+              <feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="3" result="noise" seed="2"/>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.5" xChannelSelector="R" yChannelSelector="G"/>
+            </filter>
+          </defs>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <h2>How It Works</h2>
+      <div class="steps">
+
+        <!-- Step 1 -->
+        <div class="step">
+          <div class="step-number">Step 1</div>
+          <div class="step-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="#2C2C2C" stroke-width="2" stroke-linecap="round">
+              <rect x="12" y="28" width="40" height="8" rx="4"/>
+              <circle cx="28" cy="32" r="6" fill="#E67E22" stroke="#E67E22"/>
+              <line x1="8" y1="44" x2="8" y2="20"/>
+              <line x1="4" y1="20" x2="12" y2="20"/>
+              <line x1="4" y1="44" x2="12" y2="44"/>
+              <text x="5" y="18" font-family="'Space Mono', monospace" font-size="7" fill="#6c757d" stroke="none">100</text>
+              <text x="8" y="52" font-family="'Space Mono', monospace" font-size="7" fill="#6c757d" stroke="none">0</text>
+            </svg>
+          </div>
+          <h3>Rate Your Confidence</h3>
+          <p>Before you see the answer options, you commit to a confidence level from <span style="font-family: var(--font-mono);">0</span> to <span style="font-family: var(--font-mono);">100%</span>. No hedging.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step">
+          <div class="step-number">Step 2</div>
+          <div class="step-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="#2C2C2C" stroke-width="2" stroke-linecap="round">
+              <rect x="10" y="8" width="44" height="48" rx="4"/>
+              <circle cx="22" cy="22" r="4"/>
+              <circle cx="22" cy="34" r="4" fill="#E67E22" stroke="#E67E22"/>
+              <circle cx="22" cy="46" r="4"/>
+              <line x1="32" y1="22" x2="48" y2="22"/>
+              <line x1="32" y1="34" x2="48" y2="34"/>
+              <line x1="32" y1="46" x2="48" y2="46"/>
+            </svg>
+          </div>
+          <h3>Answer the Question</h3>
+          <p>Questions are designed to trigger overconfidence. Trivia you think you know. Facts that feel familiar. Statistics that fool everyone.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step">
+          <div class="step-number">Step 3</div>
+          <div class="step-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" fill="none" stroke="#2C2C2C" stroke-width="2" stroke-linecap="round">
+              <line x1="12" y1="56" x2="52" y2="56"/>
+              <rect x="16" y="24" width="12" height="32" rx="2" fill="rgba(230, 126, 34, 0.2)" stroke="#E67E22"/>
+              <rect x="36" y="12" width="12" height="44" rx="2" fill="rgba(44, 44, 44, 0.1)" stroke="#2C2C2C"/>
+              <line x1="22" y1="20" x2="22" y2="8" stroke="#E67E22" stroke-dasharray="3 3"/>
+              <text x="22" y="6" text-anchor="middle" font-family="'Space Mono', monospace" font-size="7" fill="#E67E22" stroke="none">gap</text>
+            </svg>
+          </div>
+          <h3>See the Gap</h3>
+          <p>Your confidence versus your accuracy, visualized in real time. This is where the Dunning-Kruger effect becomes personal.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== THE SCIENCE ===== -->
+  <section class="science" id="science">
+    <div class="container">
+      <h2>Not just a trivia game. A calibration tool.</h2>
+      <p class="science-intro">Dunning-Kruger Derby is built on decades of research into metacognition... our ability to think about our own thinking. The game uses a technique called confidence calibration, originally developed in forecasting research and cognitive psychology, to measure not just what you know... but how accurately you know what you know.</p>
+      <div class="pillars">
+        <div class="pillar">
+          <h3>Metacognition</h3>
+          <p>The brain's ability to monitor its own knowledge is a learnable skill. Most of us have never been given the tools to practice it.</p>
+        </div>
+        <div class="pillar">
+          <h3>Confidence Calibration</h3>
+          <p>Measured using the Brier score... the same method used to evaluate weather forecasters and intelligence analysts. A well-calibrated mind is a more effective mind.</p>
+        </div>
+        <div class="pillar">
+          <h3>The Dunning-Kruger Effect</h3>
+          <p>First documented by Kruger &amp; Dunning (<span style="font-family: var(--font-mono);">1999</span>) at Cornell. People with limited knowledge in a domain systematically overestimate their competence. Awareness is the first step out.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RESEARCH CITATIONS ===== -->
+  <section class="research" id="research">
+    <div class="container">
+      <h2>The Research</h2>
+      <div class="carousel-wrapper">
+        <div class="carousel-track" id="carouselTrack">
+
+          <a class="citation-card" href="https://doi.org/10.1037/0022-3514.77.6.1121" target="_blank" rel="noopener">
+            <div class="citation-journal">Journal of Personality and Social Psychology</div>
+            <div class="citation-title">Unskilled and Unaware of It</div>
+            <div class="citation-authors">Kruger &amp; Dunning &middot; <span style="font-family: var(--font-mono);">1999</span></div>
+            <div class="citation-summary">The original paper establishing that low performers systematically overestimate their own competence.</div>
+          </a>
+
+          <a class="citation-card" href="https://doi.org/10.3758/s13423-017-1242-7" target="_blank" rel="noopener">
+            <div class="citation-journal">Psychonomic Bulletin &amp; Review</div>
+            <div class="citation-title">Dunning-Kruger Effects in Reasoning</div>
+            <div class="citation-authors">Pennycook, Ross, Koehler &amp; Fugelsang &middot; <span style="font-family: var(--font-mono);">2017</span></div>
+            <div class="citation-summary">Replication and extension of the DK effect specifically in reasoning and logic tasks.</div>
+          </a>
+
+          <a class="citation-card" href="https://doi.org/10.1017/CBO9780511809477.023" target="_blank" rel="noopener">
+            <div class="citation-journal">Judgment Under Uncertainty &mdash; Cambridge University Press</div>
+            <div class="citation-title">Calibration of Probabilities: The State of the Art to 1980</div>
+            <div class="citation-authors">Lichtenstein, Fischhoff &amp; Phillips &middot; <span style="font-family: var(--font-mono);">1982</span></div>
+            <div class="citation-summary">Foundational review showing that subjective confidence systematically misaligns with actual accuracy rates.</div>
+          </a>
+
+          <a class="citation-card" href="https://doi.org/10.1037/0033-295X.115.2.502" target="_blank" rel="noopener">
+            <div class="citation-journal">Psychological Review</div>
+            <div class="citation-title">The Trouble with Overconfidence</div>
+            <div class="citation-authors">Moore &amp; Healy &middot; <span style="font-family: var(--font-mono);">2008</span></div>
+            <div class="citation-summary">Distinguishes three forms of overconfidence... overprecision is the one DK Derby's confidence score directly measures.</div>
+          </a>
+
+          <a class="citation-card" href="https://doi.org/10.1098/rstb.2011.0417" target="_blank" rel="noopener">
+            <div class="citation-journal">Philosophical Transactions of the Royal Society B</div>
+            <div class="citation-title">The Neural Basis of Metacognitive Ability</div>
+            <div class="citation-authors">Fleming &amp; Dolan &middot; <span style="font-family: var(--font-mono);">2012</span></div>
+            <div class="citation-summary">Confidence calibration reflects a measurable metacognitive skill rooted in identifiable prefrontal brain systems.</div>
+          </a>
+
+          <a class="citation-card" href="https://doi.org/10.1037/0096-3445.126.4.349" target="_blank" rel="noopener">
+            <div class="citation-journal">Journal of Experimental Psychology: General</div>
+            <div class="citation-title">Monitoring One's Own Knowledge During Study</div>
+            <div class="citation-authors">Koriat &middot; <span style="font-family: var(--font-mono);">1997</span></div>
+            <div class="citation-summary">People rely on fluency and familiarity as proxies for knowledge... the mechanism behind confidently wrong answers.</div>
+          </a>
+
+          <a class="citation-card" href="https://doi.org/10.1175/1520-0493(1950)078%3C0001:VOFEIT%3E2.0.CO;2" target="_blank" rel="noopener">
+            <div class="citation-journal">Monthly Weather Review</div>
+            <div class="citation-title">Verification of Forecasts Expressed in Terms of Probability</div>
+            <div class="citation-authors">Brier &middot; <span style="font-family: var(--font-mono);">1950</span></div>
+            <div class="citation-summary">The original paper defining the Brier score... the proper scoring rule DK Derby uses to measure calibration quality.</div>
+          </a>
+
+          <a class="citation-card" href="https://doi.org/10.3758/BF03205299" target="_blank" rel="noopener">
+            <div class="citation-journal">Perception &amp; Psychophysics</div>
+            <div class="citation-title">The Calibration and Resolution of Confidence in Perceptual Judgments</div>
+            <div class="citation-authors">Baranski &amp; Petrusic &middot; <span style="font-family: var(--font-mono);">1994</span></div>
+            <div class="citation-summary">Trial-by-trial feedback measurably improves alignment between confidence and accuracy... calibration is a trainable skill.</div>
+          </a>
+
+        </div>
+        <div class="carousel-nav">
+          <button class="carousel-btn" onclick="scrollCarousel(-1)" aria-label="Previous citations">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="10,2 4,8 10,14"/></svg>
+          </button>
+          <button class="carousel-btn" onclick="scrollCarousel(1)" aria-label="Next citations">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="6,2 12,8 6,14"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHO IS THIS FOR ===== -->
+  <section class="audience" id="audience">
+    <div class="container">
+      <h2>You, probably.</h2>
+      <div class="audience-grid">
+        <div class="audience-card">
+          <h3>The Curious</h3>
+          <p>You've always suspected you might know less than you think. Now you can find out... one question at a time.</p>
+        </div>
+        <div class="audience-card">
+          <h3>The Competitive</h3>
+          <p>Your calibration score is public. Your friends' calibration scores are public. There is a leaderboard. You have been warned.</p>
+        </div>
+        <div class="audience-card">
+          <h3>The Professional</h3>
+          <p>Decision-makers, analysts, forecasters, and leaders... anyone whose job depends on knowing the limits of their own knowledge.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT THE CREATOR ===== -->
+  <section class="creator" id="creator">
+    <div class="container">
+      <h2>Built by a neuroscientist who learned to code.</h2>
+      <div class="creator-content">
+        <img src="assets/headshot.jpg" alt="Shahin Zangenehpour, founder of 98%Chimp" class="creator-photo">
+        <div class="creator-text">
+          <p>Shahin Zangenehpour spent years studying the brain at McGill University... from the molecular architecture of cortical neurons to the systems-level dynamics of multisensory integration, using molecular markers, behavioural methods, and neuroimaging (PET and fMRI). His postdoctoral work at the Montreal Neurological Institute was supervised by Robert Zatorre, one of the world's leading auditory neuroscientists.</p>
+          <p>Then he learned to code. Not as a career change... as a change of substrate. The same questions about how information systems process, integrate, and make meaning from the world... just applied to different materials.</p>
+          <p>Dunning-Kruger Derby is where those two careers converge. The science is real. The game is real. The humbling is optional but inevitable.</p>
+          <p><a href="https://www.98chimp.com" class="creator-link" target="_blank" rel="noopener">Learn more about 98%Chimp and the full product portfolio &rarr;</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EARLY ACCESS CTA ===== -->
+  <section class="early-access" id="signup">
+    <div class="container">
+      <h2>Be among the first to discover your overconfidence.</h2>
+      <p class="early-access-sub">DK Derby launches soon on iOS. Join the early access list and we'll notify you the moment it's available.</p>
+      <button class="early-access-cta" onclick="openModal()">Join Early Access</button>
+    </div>
+  </section>
+
+  <!-- ===== EXIT ALERT ===== -->
+  <div class="exit-alert-overlay" id="exitAlertOverlay">
+    <div class="exit-alert">
+      <div class="exit-alert-icon" aria-hidden="true">&#8599;</div>
+      <h4>You're leaving DK Derby</h4>
+      <div class="exit-alert-title" id="exitAlertTitle"></div>
+      <div class="exit-alert-journal" id="exitAlertJournal"></div>
+      <div class="exit-alert-actions">
+        <button class="exit-alert-go" id="exitAlertGo">Read the Paper</button>
+        <button class="exit-alert-cancel" onclick="closeExitAlert()">Stay Here</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SIGNUP MODAL ===== -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()" aria-label="Close modal">&times;</button>
+      <h3 id="modalTitle">Join Early Access</h3>
+
+      <form id="signupForm" novalidate>
+        <div class="form-group" id="nameGroup">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" name="firstName" required placeholder="Your first name">
+          <div class="error-text">Please enter your first name.</div>
+        </div>
+
+        <div class="form-group" id="emailGroup">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required placeholder="you@example.com">
+          <div class="error-text">Please enter a valid email address.</div>
+        </div>
+
+        <div class="form-group" id="joiningGroup">
+          <label for="joiningAs">I'm joining as</label>
+          <select id="joiningAs" name="joiningAs" required>
+            <option value="" disabled selected>Select one...</option>
+            <option value="Just curious">Just curious</option>
+            <option value="Educator or researcher">Educator or researcher</option>
+            <option value="Corporate / team training">Corporate / team training</option>
+            <option value="Press or media">Press or media</option>
+          </select>
+          <div class="error-text">Please select an option.</div>
+        </div>
+
+        <button type="submit" class="modal-submit" id="submitBtn">Count Me In</button>
+        <p class="modal-micro">No spam. No dark patterns. Just a notification when we launch.</p>
+      </form>
+
+      <div class="modal-message" id="modalMessage"></div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-main">
+        <a href="index.html" class="footer-wordmark">DK Derby</a>
+        <div class="footer-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="https://www.98chimp.com" target="_blank" rel="noopener">98chimp.com</a>
+        </div>
+        <div class="footer-badge" aria-label="App Store - Coming Soon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="2" width="12" height="16" rx="2"/><line x1="10" y1="15" x2="10" y2="15.01" stroke-width="2"/></svg>
+          Coming Soon
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 98%Chimp. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== JS ===== -->
+  <script>
+    /* ===== GOOGLE SHEETS INTEGRATION ===== */
+    const GOOGLE_SHEET_URL = 'REPLACE_WITH_GOOGLE_APPS_SCRIPT_URL';
+
+    /* ===== MOBILE MENU ===== */
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      const btn = document.querySelector('.nav-hamburger');
+      const isOpen = menu.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen);
+    }
+
+    /* ===== EXIT ALERT ===== */
+    let pendingExitUrl = null;
+
+    document.querySelectorAll('a.citation-card').forEach(function(card) {
+      card.addEventListener('click', function(e) {
+        e.preventDefault();
+        pendingExitUrl = this.href;
+        document.getElementById('exitAlertTitle').textContent =
+          this.querySelector('.citation-title').textContent;
+        document.getElementById('exitAlertJournal').textContent =
+          this.querySelector('.citation-journal').textContent;
+        document.getElementById('exitAlertOverlay').classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    document.getElementById('exitAlertGo').addEventListener('click', function() {
+      if (pendingExitUrl) window.open(pendingExitUrl, '_blank', 'noopener');
+      closeExitAlert();
+    });
+
+    document.getElementById('exitAlertOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeExitAlert();
+    });
+
+    function closeExitAlert() {
+      document.getElementById('exitAlertOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+      pendingExitUrl = null;
+    }
+
+    /* ===== MODAL ===== */
+    function openModal() {
+      const overlay = document.getElementById('modalOverlay');
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('firstName').focus();
+    }
+
+    function closeModal() {
+      const overlay = document.getElementById('modalOverlay');
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+      resetForm();
+    }
+
+    function resetForm() {
+      const form = document.getElementById('signupForm');
+      form.reset();
+      form.style.display = '';
+      document.getElementById('modalMessage').className = 'modal-message';
+      document.getElementById('modalMessage').textContent = '';
+      document.querySelectorAll('.form-group').forEach(g => g.classList.remove('has-error'));
+      document.getElementById('submitBtn').disabled = false;
+    }
+
+    // Close modal on overlay click
+    document.getElementById('modalOverlay').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+
+    // Close modals on Escape key
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        closeModal();
+        closeExitAlert();
+      }
+    });
+
+    /* ===== FORM VALIDATION & SUBMISSION ===== */
+    document.getElementById('signupForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+
+      const firstName = document.getElementById('firstName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const joiningAs = document.getElementById('joiningAs').value;
+
+      // Reset errors
+      document.querySelectorAll('.form-group').forEach(g => g.classList.remove('has-error'));
+
+      let hasError = false;
+
+      if (!firstName) {
+        document.getElementById('nameGroup').classList.add('has-error');
+        hasError = true;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email || !emailRegex.test(email)) {
+        document.getElementById('emailGroup').classList.add('has-error');
+        hasError = true;
+      }
+
+      if (!joiningAs) {
+        document.getElementById('joiningGroup').classList.add('has-error');
+        hasError = true;
+      }
+
+      if (hasError) return;
+
+      const submitBtn = document.getElementById('submitBtn');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+
+      const payload = {
+        timestamp: new Date().toISOString(),
+        firstName: firstName,
+        email: email,
+        joiningAs: joiningAs
+      };
+
+      try {
+        const response = await fetch(GOOGLE_SHEET_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        // With no-cors mode, we assume success if no error is thrown
+        const form = document.getElementById('signupForm');
+        const msg = document.getElementById('modalMessage');
+        form.style.display = 'none';
+        msg.className = 'modal-message success';
+        msg.textContent = "You're on the list. Prepare to be humbled.";
+
+        setTimeout(closeModal, 2000);
+      } catch (err) {
+        const msg = document.getElementById('modalMessage');
+        msg.className = 'modal-message error';
+        msg.textContent = 'Something went wrong. Please try again or email us at hello@98chimp.com';
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Count Me In';
+      }
+    });
+
+    /* ===== CAROUSEL ===== */
+    function scrollCarousel(direction) {
+      const track = document.getElementById('carouselTrack');
+      const cardWidth = 320 + 24; // card width + gap
+      track.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+    }
+
+    // Touch swipe support for carousel
+    (function() {
+      const track = document.getElementById('carouselTrack');
+      let startX = 0;
+      let scrollStart = 0;
+
+      track.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+        scrollStart = track.scrollLeft;
+      }, { passive: true });
+
+      track.addEventListener('touchmove', function(e) {
+        const dx = startX - e.touches[0].clientX;
+        track.scrollLeft = scrollStart + dx;
+      }, { passive: true });
+    })();
+  </script>
+
+</body>
+</html>

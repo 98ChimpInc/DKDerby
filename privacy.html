@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy — Dunning-Kruger Derby</title>
+  <meta name="description" content="Privacy Policy for Dunning-Kruger Derby, a daily confidence calibration game by 98%Chimp.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream: #F5F1EB;
+      --orange: #E67E22;
+      --orange-dark: #C0392B;
+      --dark: #2C2C2C;
+      --text: #1a1a1a;
+      --muted: #6c757d;
+      --card-bg: #FFFFFF;
+
+      --font-heading: 'Fraunces', serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+
+      --radius: 8px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; }
+    h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; line-height: 1.2; }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 16px 0;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-wordmark {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--orange);
+    }
+    .nav-cta {
+      background: var(--orange);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--orange-dark); }
+
+    /* ===== LEGAL CONTENT ===== */
+    .legal {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+    .legal h1 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      margin-bottom: 12px;
+    }
+    .legal-date {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+    .legal h2 {
+      font-size: 1.3rem;
+      margin-top: 40px;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .legal p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .legal ul {
+      margin-bottom: 16px;
+      padding-left: 24px;
+    }
+    .legal li {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .legal a {
+      color: var(--orange);
+      transition: color 0.2s;
+    }
+    .legal a:hover { color: var(--orange-dark); }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--dark);
+      color: #fff;
+      padding: 48px 0 24px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .footer-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .footer-wordmark {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--orange);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--orange); }
+    .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    @media (max-width: 768px) {
+      .footer-main {
+        flex-direction: column;
+        text-align: center;
+      }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-wordmark">DK Derby</a>
+      <a href="index.html#signup" class="nav-cta">Get Early Access</a>
+    </div>
+  </nav>
+
+  <!-- ===== PRIVACY POLICY ===== -->
+  <main class="legal">
+    <h1>Privacy Policy</h1>
+    <p class="legal-date">Effective date: February 2026</p>
+
+    <p>98%Chimp ("we", "us", "our") operates Dunning-Kruger Derby ("DK Derby"). This Privacy Policy explains what information we collect, how we use it, and the choices you have.</p>
+
+    <h2>1. Information We Collect</h2>
+    <ul>
+      <li><strong>Email address and first name</strong> ... provided when you sign up for early access</li>
+      <li><strong>Gameplay data</strong> ... questions answered, confidence scores, accuracy, and calibration metrics</li>
+      <li><strong>Device information and usage analytics</strong> ... collected via Firebase Analytics to understand how the app is used</li>
+      <li><strong>No sensitive personal data is collected</strong> ... we do not collect financial information, government identifiers, health data, or biometric data</li>
+    </ul>
+
+    <h2>2. How We Use Your Information</h2>
+    <ul>
+      <li>To notify you when DK Derby launches and to send product updates</li>
+      <li>To improve question quality, difficulty calibration, and scoring algorithms</li>
+      <li>To generate anonymized, aggregate research insights about confidence calibration patterns</li>
+      <li>We do not sell your data. We do not share it with advertisers.</li>
+    </ul>
+
+    <h2>3. Data Storage</h2>
+    <ul>
+      <li><strong>Early access list</strong> ... stored in Google Sheets, secured with access controls limited to 98%Chimp team members</li>
+      <li><strong>Gameplay data</strong> ... stored in Firebase (Google Cloud infrastructure), subject to Google's security standards and data processing agreements</li>
+    </ul>
+
+    <h2>4. Your Rights</h2>
+    <p>You have the right to access, correct, or delete any personal data we hold about you. You may also request a copy of your data in a portable format. To exercise any of these rights, contact us at <a href="mailto:hello@98chimp.com">hello@98chimp.com</a> and we will respond within 30 days.</p>
+
+    <h2>5. Analytics</h2>
+    <ul>
+      <li>Firebase Analytics is used to track app performance, feature usage, and engagement patterns</li>
+      <li>We do not use cross-app tracking</li>
+      <li>We do not use advertising identifiers</li>
+      <li>Analytics data is used solely to improve DK Derby and is not shared with third parties for marketing purposes</li>
+    </ul>
+
+    <h2>6. Children's Privacy</h2>
+    <p>DK Derby is intended for users <span style="font-family: var(--font-mono);">13</span> and older. We do not knowingly collect personal information from children under <span style="font-family: var(--font-mono);">13</span>. If we become aware that a child under <span style="font-family: var(--font-mono);">13</span> has provided us with personal data, we will take steps to delete that information promptly. If you believe a child under <span style="font-family: var(--font-mono);">13</span> has submitted data to us, please contact us at <a href="mailto:hello@98chimp.com">hello@98chimp.com</a>.</p>
+
+    <h2>7. Changes to This Policy</h2>
+    <p>We reserve the right to update this Privacy Policy at any time. Material changes will be communicated through the application or via email. Your continued use of DK Derby after such notification constitutes acceptance of the updated policy. We encourage you to review this page periodically.</p>
+
+    <h2>8. Contact</h2>
+    <p>If you have questions about this Privacy Policy or your personal data, please contact us at <a href="mailto:hello@98chimp.com">hello@98chimp.com</a>.</p>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-main">
+        <a href="index.html" class="footer-wordmark">DK Derby</a>
+        <div class="footer-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="https://www.98chimp.com" target="_blank" rel="noopener">98chimp.com</a>
+        </div>
+        <div class="footer-badge" aria-label="App Store - Coming Soon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="2" width="12" height="16" rx="2"/><line x1="10" y1="15" x2="10" y2="15.01" stroke-width="2"/></svg>
+          Coming Soon
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 98%Chimp. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

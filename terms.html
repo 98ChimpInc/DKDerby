@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Use — Dunning-Kruger Derby</title>
+  <meta name="description" content="Terms of Use for Dunning-Kruger Derby, a daily confidence calibration game by 98%Chimp.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream: #F5F1EB;
+      --orange: #E67E22;
+      --orange-dark: #C0392B;
+      --dark: #2C2C2C;
+      --text: #1a1a1a;
+      --muted: #6c757d;
+      --card-bg: #FFFFFF;
+
+      --font-heading: 'Fraunces', serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+
+      --radius: 8px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; }
+    h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; line-height: 1.2; }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 16px 0;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-wordmark {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--orange);
+    }
+    .nav-cta {
+      background: var(--orange);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--orange-dark); }
+
+    /* ===== LEGAL CONTENT ===== */
+    .legal {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 80px 24px;
+    }
+    .legal h1 {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      margin-bottom: 12px;
+    }
+    .legal-date {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 40px;
+    }
+    .legal-disclaimer {
+      background: var(--card-bg);
+      border-left: 4px solid var(--orange);
+      padding: 20px 24px;
+      border-radius: var(--radius);
+      margin-bottom: 48px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      font-style: italic;
+      color: var(--text);
+    }
+    .legal h2 {
+      font-size: 1.3rem;
+      margin-top: 40px;
+      margin-bottom: 12px;
+      color: var(--text);
+    }
+    .legal p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+    .legal a {
+      color: var(--orange);
+      transition: color 0.2s;
+    }
+    .legal a:hover { color: var(--orange-dark); }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--dark);
+      color: #fff;
+      padding: 48px 0 24px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .footer-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .footer-wordmark {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--orange);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--orange); }
+    .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    @media (max-width: 768px) {
+      .footer-main {
+        flex-direction: column;
+        text-align: center;
+      }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-wordmark">DK Derby</a>
+      <a href="index.html#signup" class="nav-cta">Get Early Access</a>
+    </div>
+  </nav>
+
+  <!-- ===== TERMS OF USE ===== -->
+  <main class="legal">
+    <h1>Terms of Use</h1>
+    <p class="legal-date">Effective date: February 2026</p>
+
+    <div class="legal-disclaimer">
+      DK Derby is an educational and entertainment application. It is not a psychological assessment tool and should not be used as a substitute for professional evaluation.
+    </div>
+
+    <h2>1. Acceptance of Terms</h2>
+    <p>By accessing or using Dunning-Kruger Derby ("DK Derby"), you agree to be bound by these Terms of Use. If you do not agree to these terms, you may not use the application. Your continued use of DK Derby constitutes your acceptance of any updates or modifications to these terms.</p>
+
+    <h2>2. Description of Service</h2>
+    <p>DK Derby is a daily confidence calibration game designed for educational and entertainment purposes. The application presents questions and asks users to rate their confidence in their answers, producing a calibration score that reflects the alignment between confidence and accuracy. DK Derby is not a clinical diagnostic tool, a psychological assessment, or a substitute for professional evaluation of any kind.</p>
+
+    <h2>3. User Conduct</h2>
+    <p>You agree to use DK Derby only for its intended purpose. You may not:</p>
+    <p>Use automated systems, bots, or scripts to access or interact with the application. Attempt to reverse-engineer, decompile, or extract the source code, scoring algorithms, or question databases. Interfere with or disrupt the application's infrastructure, servers, or networks. Misrepresent your identity or impersonate another user. Use the application to harass, abuse, or harm others. Redistribute, resell, or sublicense any part of the application or its content.</p>
+
+    <h2>4. Intellectual Property</h2>
+    <p>All content within DK Derby... including questions, answer explanations, scoring algorithms, calibration methodologies, visual design, illustrations, and copy... is the intellectual property of 98%Chimp and is protected by applicable copyright and intellectual property laws. You may not reproduce, distribute, modify, or create derivative works from any content within the application without prior written permission from 98%Chimp.</p>
+
+    <h2>5. Disclaimer of Warranties</h2>
+    <p>DK Derby is provided on an "as is" and "as available" basis without warranties of any kind, either express or implied. 98%Chimp does not warrant that the application will be uninterrupted, error-free, or free of harmful components. The application is designed for educational and entertainment purposes only. No content within DK Derby should be interpreted as professional psychological, medical, or clinical advice. Your calibration scores reflect game performance and are not a measure of intelligence, competence, or psychological fitness.</p>
+
+    <h2>6. Limitation of Liability</h2>
+    <p>To the fullest extent permitted by applicable law, 98%Chimp and its officers, directors, employees, and agents shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of or inability to use DK Derby. This includes, without limitation, damages for loss of data, loss of profits, or any other intangible losses, even if 98%Chimp has been advised of the possibility of such damages. In no event shall 98%Chimp's total liability exceed the amount you paid to access the application in the twelve months preceding the claim.</p>
+
+    <h2>7. Changes to Terms</h2>
+    <p>98%Chimp reserves the right to modify these Terms of Use at any time. Material changes will be communicated through the application or via the email address associated with your account. Your continued use of DK Derby after such notification constitutes acceptance of the updated terms. We encourage you to review these terms periodically.</p>
+
+    <h2>8. Contact</h2>
+    <p>If you have questions about these Terms of Use, please contact us at <a href="mailto:hello@98chimp.com">hello@98chimp.com</a>.</p>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-main">
+        <a href="index.html" class="footer-wordmark">DK Derby</a>
+        <div class="footer-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="https://www.98chimp.com" target="_blank" rel="noopener">98chimp.com</a>
+        </div>
+        <div class="footer-badge" aria-label="App Store - Coming Soon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="2" width="12" height="16" rx="2"/><line x1="10" y1="15" x2="10" y2="15.01" stroke-width="2"/></svg>
+          Coming Soon
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 98%Chimp. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
