@@ -18,10 +18,12 @@ Closes the gap between what you *think* you know and what you *actually* know.
 
 ### Files
 ```
-dkderby/
+DKDerby/
 ├── index.html     ← main landing page
 ├── terms.html     ← terms of use
-└── privacy.html   ← privacy policy
+├── privacy.html   ← privacy policy
+└── assets/
+    └── headshot.jpg  ← founder photo
 ```
 
 All three files share the same nav and footer markup. Duplicate rather than
@@ -41,7 +43,7 @@ abstract — keeping each file self-contained is more important than DRY here.
 
 ```bash
 python3 -m http.server 8000
-# then open http://localhost:8000/dkderby/
+# then open http://localhost:8000/
 ```
 
 ---
@@ -180,8 +182,8 @@ The Google Apps Script will later trigger a receipt email to the signee.
 - Ellipses (`...`) not em-dashes (`—`) throughout all copy
 - No Lorem Ipsum anywhere in any file
 - Numbers, percentages, and calibration scores always in Space Mono
-- Do not invent citations — use only the eight citations specified in the
-  Claude Code handoff doc
+- Do not invent citations — use only the eight verified citations (see citations addendum)
+- All citation cards must link to verified DOI URLs and show an exit alert before navigating
 - "DK Derby" not "Dunning-Kruger Derby" in nav and short-form contexts
 - Full name "Dunning-Kruger Derby" in hero headline and formal copy
 
@@ -205,10 +207,10 @@ Key requirements:
 
 ## Deployment
 
-- Repo: `98ChimpInc/dkderby-landing` under the 98ChimpInc GitHub org
-- Auto-routes to `98chimp.com/dkderby-landing` via GitHub Pages
+- Repo: `98ChimpInc/DKDerby` under the 98ChimpInc GitHub org
+- Live at `https://www.98chimp.com/DKDerby/` via GitHub Pages (legacy deploy from `main` branch root)
 - HTTPS enforced
-- Later: may move to dedicated subdomain `dkderby.98chimp.com`
+- iOS app repo: `98ChimpInc/dkderby-app-ios`
 
 ---
 
