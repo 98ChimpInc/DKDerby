@@ -170,6 +170,20 @@
       font-size: 0.8rem;
       color: rgba(255, 255, 255, 0.4);
     }
+    .footer-maple {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .footer-maple .maple {
+      width: 16px;
+      height: 16px;
+      opacity: 0.4;
+    }
     @media (max-width: 768px) {
       .footer-main {
         flex-direction: column;
@@ -221,7 +235,7 @@
     <p>98%Chimp reserves the right to modify these Terms of Use at any time. Material changes will be communicated through the application or via the email address associated with your account. Your continued use of DK Derby after such notification constitutes acceptance of the updated terms. We encourage you to review these terms periodically.</p>
 
     <h2>8. Contact</h2>
-    <p>If you have questions about these Terms of Use, please contact us at <a href="mailto:hello@98chimp.com">hello@98chimp.com</a>.</p>
+    <p>If you have questions about these Terms of Use, please contact us at <a href="mailto:hello@98chimp.ca">hello@98chimp.ca</a>.</p>
   </main>
 
   <!-- ===== FOOTER ===== -->
@@ -232,7 +246,7 @@
         <div class="footer-links">
           <a href="privacy.html">Privacy Policy</a>
           <a href="terms.html">Terms of Use</a>
-          <a href="https://www.98chimp.com" target="_blank" rel="noopener">98chimp.com</a>
+          <a href="https://www.98chimp.ca" onclick="if(document.referrer.includes('98chimp.ca')){event.preventDefault();history.back();}">98chimp.ca</a>
         </div>
         <div class="footer-badge" aria-label="App Store - Coming Soon">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="2" width="12" height="16" rx="2"/><line x1="10" y1="15" x2="10" y2="15.01" stroke-width="2"/></svg>
@@ -240,7 +254,8 @@
         </div>
       </div>
       <div class="footer-bottom">
-        &copy; 2026 98%Chimp. All rights reserved.
+        &copy; 2015&ndash;2026 98% Chimp Inc.
+        <div class="footer-maple">Made in<img class="maple" src="assets/maple.svg" alt="Canada"></div>
       </div>
     </div>
   </footer>

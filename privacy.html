@@ -169,6 +169,20 @@
       font-size: 0.8rem;
       color: rgba(255, 255, 255, 0.4);
     }
+    .footer-maple {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .footer-maple .maple {
+      width: 16px;
+      height: 16px;
+      opacity: 0.4;
+    }
     @media (max-width: 768px) {
       .footer-main {
         flex-direction: column;
@@ -218,7 +232,7 @@
     </ul>
 
     <h2>4. Your Rights</h2>
-    <p>You have the right to access, correct, or delete any personal data we hold about you. You may also request a copy of your data in a portable format. To exercise any of these rights, contact us at <a href="mailto:hello@98chimp.com">hello@98chimp.com</a> and we will respond within 30 days.</p>
+    <p>You have the right to access, correct, or delete any personal data we hold about you. You may also request a copy of your data in a portable format. To exercise any of these rights, contact us at <a href="mailto:hello@98chimp.ca">hello@98chimp.ca</a> and we will respond within 30 days.</p>
 
     <h2>5. Analytics</h2>
     <ul>
@@ -229,13 +243,13 @@
     </ul>
 
     <h2>6. Children's Privacy</h2>
-    <p>DK Derby is intended for users <span style="font-family: var(--font-mono);">13</span> and older. We do not knowingly collect personal information from children under <span style="font-family: var(--font-mono);">13</span>. If we become aware that a child under <span style="font-family: var(--font-mono);">13</span> has provided us with personal data, we will take steps to delete that information promptly. If you believe a child under <span style="font-family: var(--font-mono);">13</span> has submitted data to us, please contact us at <a href="mailto:hello@98chimp.com">hello@98chimp.com</a>.</p>
+    <p>DK Derby is intended for users <span style="font-family: var(--font-mono);">13</span> and older. We do not knowingly collect personal information from children under <span style="font-family: var(--font-mono);">13</span>. If we become aware that a child under <span style="font-family: var(--font-mono);">13</span> has provided us with personal data, we will take steps to delete that information promptly. If you believe a child under <span style="font-family: var(--font-mono);">13</span> has submitted data to us, please contact us at <a href="mailto:hello@98chimp.ca">hello@98chimp.ca</a>.</p>
 
     <h2>7. Changes to This Policy</h2>
     <p>We reserve the right to update this Privacy Policy at any time. Material changes will be communicated through the application or via email. Your continued use of DK Derby after such notification constitutes acceptance of the updated policy. We encourage you to review this page periodically.</p>
 
     <h2>8. Contact</h2>
-    <p>If you have questions about this Privacy Policy or your personal data, please contact us at <a href="mailto:hello@98chimp.com">hello@98chimp.com</a>.</p>
+    <p>If you have questions about this Privacy Policy or your personal data, please contact us at <a href="mailto:hello@98chimp.ca">hello@98chimp.ca</a>.</p>
   </main>
 
   <!-- ===== FOOTER ===== -->
@@ -246,7 +260,7 @@
         <div class="footer-links">
           <a href="privacy.html">Privacy Policy</a>
           <a href="terms.html">Terms of Use</a>
-          <a href="https://www.98chimp.com" target="_blank" rel="noopener">98chimp.com</a>
+          <a href="https://www.98chimp.ca" onclick="if(document.referrer.includes('98chimp.ca')){event.preventDefault();history.back();}">98chimp.ca</a>
         </div>
         <div class="footer-badge" aria-label="App Store - Coming Soon">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="2" width="12" height="16" rx="2"/><line x1="10" y1="15" x2="10" y2="15.01" stroke-width="2"/></svg>
@@ -254,7 +268,8 @@
         </div>
       </div>
       <div class="footer-bottom">
-        &copy; 2026 98%Chimp. All rights reserved.
+        &copy; 2015&ndash;2026 98% Chimp Inc.
+        <div class="footer-maple">Made in<img class="maple" src="assets/maple.svg" alt="Canada"></div>
       </div>
     </div>
   </footer>

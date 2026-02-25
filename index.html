@@ -657,6 +657,20 @@
       font-size: 0.8rem;
       color: rgba(255, 255, 255, 0.4);
     }
+    .footer-maple {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .footer-maple .maple {
+      width: 16px;
+      height: 16px;
+      opacity: 0.4;
+    }
     @media (max-width: 768px) {
       .footer-main {
         flex-direction: column;
@@ -936,7 +950,7 @@
           <p>Shahin Zangenehpour spent years studying the brain at McGill University... from the molecular architecture of cortical neurons to the systems-level dynamics of multisensory integration, using molecular markers, behavioural methods, and neuroimaging (PET and fMRI). His postdoctoral work at the Montreal Neurological Institute was supervised by Robert Zatorre, one of the world's leading auditory neuroscientists.</p>
           <p>Then he learned to code. Not as a career change... as a change of substrate. The same questions about how information systems process, integrate, and make meaning from the world... just applied to different materials.</p>
           <p>Dunning-Kruger Derby is where those two careers converge. The science is real. The game is real. The humbling is optional but inevitable.</p>
-          <p><a href="https://www.98chimp.com" class="creator-link" target="_blank" rel="noopener">Learn more about 98%Chimp and the full product portfolio &rarr;</a></p>
+          <p><a href="https://www.98chimp.ca" class="creator-link" onclick="if(document.referrer.includes('98chimp.ca')){event.preventDefault();history.back();}">Learn more about 98%Chimp and the full product portfolio &rarr;</a></p>
         </div>
       </div>
     </div>
@@ -1012,7 +1026,7 @@
         <div class="footer-links">
           <a href="privacy.html">Privacy Policy</a>
           <a href="terms.html">Terms of Use</a>
-          <a href="https://www.98chimp.com" target="_blank" rel="noopener">98chimp.com</a>
+          <a href="https://www.98chimp.ca" onclick="if(document.referrer.includes('98chimp.ca')){event.preventDefault();history.back();}">98chimp.ca</a>
         </div>
         <div class="footer-badge" aria-label="App Store - Coming Soon">
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="2" width="12" height="16" rx="2"/><line x1="10" y1="15" x2="10" y2="15.01" stroke-width="2"/></svg>
@@ -1020,7 +1034,8 @@
         </div>
       </div>
       <div class="footer-bottom">
-        &copy; 2026 98%Chimp. All rights reserved.
+        &copy; 2015&ndash;2026 98% Chimp Inc.
+        <div class="footer-maple">Made in<img class="maple" src="assets/maple.svg" alt="Canada"></div>
       </div>
     </div>
   </footer>
@@ -1168,7 +1183,7 @@
       } catch (err) {
         const msg = document.getElementById('modalMessage');
         msg.className = 'modal-message error';
-        msg.textContent = 'Something went wrong. Please try again or email us at hello@98chimp.com';
+        msg.textContent = 'Something went wrong. Please try again or email us at hello@98chimp.ca';
         submitBtn.disabled = false;
         submitBtn.textContent = 'Count Me In';
       }
