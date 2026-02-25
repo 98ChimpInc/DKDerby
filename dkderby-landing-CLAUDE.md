@@ -64,7 +64,7 @@ python3 -m http.server 8000
 
 ### Typography
 
-DK Derby uses a distinct three-font system — different from 98chimp.com.
+DK Derby uses a distinct three-font system — different from 98chimp.ca.
 The product has its own personality: sharp, confident, slightly irreverent,
 academically grounded. The typography should feel like that.
 
@@ -148,7 +148,7 @@ Slightly imperfect curves to feel drawn rather than generated.
 > No spam. No dark patterns. Just a notification when we launch.
 
 **Success state:** "You're on the list. Prepare to be humbled."
-**Error state:** "Something went wrong. Please try again or email us at hello@98chimp.com"
+**Error state:** "Something went wrong. Please try again or email us at hello@98chimp.ca"
 **Auto-close:** 2 seconds after success message displays
 
 ---
@@ -208,7 +208,7 @@ Key requirements:
 ## Deployment
 
 - Repo: `98ChimpInc/DKDerby` under the 98ChimpInc GitHub org
-- Live at `https://www.98chimp.com/DKDerby/` via GitHub Pages (legacy deploy from `main` branch root)
+- Live at `https://www.98chimp.ca/DKDerby/` via GitHub Pages (legacy deploy from `main` branch root)
 - HTTPS enforced
 - iOS app repo: `98ChimpInc/dkderby-app-ios`
 
@@ -216,7 +216,7 @@ Key requirements:
 
 ## Relationship to Other Projects
 
-- **98chimp.com** — parent portfolio site; DK Derby card on that site links here
+- **98chimp.ca** — parent portfolio site; DK Derby card on that site links here
 - **DK Derby iOS app** — product this page promotes; see iOS CLAUDE.md for
   game mechanics, scoring algorithm, and content accuracy standards
 - **Loomi** — sibling product; `loomi.kids` is the functional reference for
