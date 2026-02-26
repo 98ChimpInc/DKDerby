@@ -1010,6 +1010,12 @@
           <div class="error-text">Please select an option.</div>
         </div>
 
+        <!-- Honeypot — hidden from humans, catches bots -->
+        <div style="position:absolute;left:-9999px;" aria-hidden="true">
+          <label for="website">Leave this empty</label>
+          <input type="text" id="website" name="website" tabindex="-1" autocomplete="off">
+        </div>
+
         <button type="submit" class="modal-submit" id="submitBtn">Count Me In</button>
         <p class="modal-micro">No spam. No dark patterns. Just a notification when we launch.</p>
       </form>
@@ -1126,6 +1132,16 @@
     document.getElementById('signupForm').addEventListener('submit', async function(e) {
       e.preventDefault();
 
+      // Honeypot check — if filled, silently bail (it's a bot)
+      if (document.getElementById('website').value) {
+        document.getElementById('signupForm').style.display = 'none';
+        var msg = document.getElementById('modalMessage');
+        msg.className = 'modal-message success';
+        msg.textContent = "You're on the list. Prepare to be humbled.";
+        setTimeout(closeModal, 2000);
+        return;
+      }
+
       const firstName = document.getElementById('firstName').value.trim();
       const email = document.getElementById('email').value.trim();
       const joiningAs = document.getElementById('joiningAs').value;
@@ -1161,18 +1177,19 @@
         timestamp: new Date().toISOString(),
         firstName: firstName,
         email: email,
-        joiningAs: joiningAs
+        joiningAs: joiningAs,
+        source: 'DKDerby'
       };
 
       try {
-        const response = await fetch(GOOGLE_SHEET_URL, {
+        await fetch(GOOGLE_SHEET_URL, {
           method: 'POST',
           mode: 'no-cors',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
 
-        // With no-cors mode, we assume success if no error is thrown
+        // With no-cors mode, we show success optimistically
         const form = document.getElementById('signupForm');
         const msg = document.getElementById('modalMessage');
         form.style.display = 'none';
