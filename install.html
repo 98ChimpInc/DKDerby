@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S2YQT8KYY5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-S2YQT8KYY5');
+  </script>
+
+  <!-- iOS auto-redirect -->
+  <script>
+    var TESTFLIGHT_LINK = 'https://testflight.apple.com/join/SRWqftSs';
+    var ua = navigator.userAgent || '';
+    if (/iPhone|iPad|iPod/.test(ua)) {
+      window.location.replace(TESTFLIGHT_LINK);
+    }
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Install DK Derby — TestFlight Beta</title>
+  <meta name="description" content="Install Dunning-Kruger Derby on your iPhone via Apple TestFlight. Open this link on your iPhone to get the beta.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream: #F5F1EB;
+      --orange: #E67E22;
+      --orange-dark: #C0392B;
+      --dark: #2C2C2C;
+      --text: #1a1a1a;
+      --muted: #6c757d;
+      --card-bg: #FFFFFF;
+
+      --font-heading: 'Fraunces', serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+
+      --radius: 8px;
+      --radius-lg: 16px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--text);
+      background: var(--cream);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; }
+    h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; line-height: 1.2; }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--cream);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      padding: 16px 0;
+    }
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-wordmark {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: var(--orange);
+    }
+    .nav-cta {
+      background: var(--orange);
+      color: #fff;
+      padding: 10px 24px;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--orange-dark); }
+
+    /* ===== INSTALL CONTENT ===== */
+    .install-content {
+      padding: 80px 24px 100px;
+      text-align: center;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .install-icon {
+      font-size: 56px;
+      margin-bottom: 24px;
+    }
+
+    .install-title {
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      margin-bottom: 16px;
+      color: var(--text);
+    }
+
+    .install-subtitle {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--muted);
+      max-width: 480px;
+      margin: 0 auto 40px;
+    }
+
+    .install-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: var(--radius-lg);
+      padding: 36px 40px;
+      max-width: 520px;
+      margin: 0 auto 36px;
+      text-align: left;
+    }
+
+    .install-card h2 {
+      font-size: 1.15rem;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .install-steps {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .install-steps li {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 14px;
+      padding-left: 36px;
+      position: relative;
+    }
+
+    .install-steps li:last-child { margin-bottom: 0; }
+
+    .step-number {
+      position: absolute;
+      left: 0;
+      top: 2px;
+      width: 24px;
+      height: 24px;
+      background: rgba(230, 126, 34, 0.1);
+      border: 1px solid rgba(230, 126, 34, 0.3);
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      color: var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .install-steps strong {
+      font-weight: 500;
+    }
+
+    /* ===== CTA BUTTON ===== */
+    .copy-link-wrapper {
+      text-align: center;
+    }
+
+    .btn-copy-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 32px;
+      background: var(--orange);
+      border: none;
+      border-radius: var(--radius);
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-copy-link:hover {
+      background: var(--orange-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-copy-link svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .copy-feedback {
+      display: none;
+      font-size: 0.85rem;
+      color: var(--orange);
+      margin-top: 12px;
+    }
+
+    .copy-feedback.visible {
+      display: block;
+    }
+
+    .install-note {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 36px;
+      line-height: 1.6;
+    }
+
+    .install-note a {
+      color: var(--orange);
+      transition: color 0.2s;
+    }
+
+    .install-note a:hover { color: var(--orange-dark); }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--dark);
+      color: #fff;
+      padding: 48px 0 24px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .footer-main {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .footer-wordmark {
+      font-family: var(--font-heading);
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--orange);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.7);
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--orange); }
+    .footer-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius);
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 20px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .footer-maple {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .footer-maple .maple {
+      width: 16px;
+      height: 16px;
+      opacity: 0.4;
+    }
+
+    @media (max-width: 768px) {
+      .install-content { padding: 50px 20px 80px; }
+      .install-card { padding: 28px 24px; }
+      .footer-main {
+        flex-direction: column;
+        text-align: center;
+      }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-wordmark">DK Derby</a>
+      <a href="index.html" class="nav-cta">Back to Home</a>
+    </div>
+  </nav>
+
+  <!-- ===== INSTALL CONTENT ===== -->
+  <main class="install-content">
+    <div class="install-icon">📱</div>
+
+    <h1 class="install-title">Open this link on your iPhone</h1>
+    <p class="install-subtitle">DK Derby is an iOS app shared through Apple's TestFlight. You'll need to open this link on your iPhone to install it.</p>
+
+    <div class="install-card">
+      <h2>How to install DK Derby</h2>
+      <ol class="install-steps">
+        <li><span class="step-number">1</span> Copy the link below and send it to your iPhone (text, email, or AirDrop)</li>
+        <li><span class="step-number">2</span> Open the link on your iPhone</li>
+        <li><span class="step-number">3</span> If prompted, install the free <strong>TestFlight</strong> app from the App Store</li>
+        <li><span class="step-number">4</span> Tap <strong>Accept</strong> to download DK Derby</li>
+      </ol>
+    </div>
+
+    <div class="copy-link-wrapper">
+      <button class="btn-copy-link" onclick="copyInstallLink()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+          <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+        </svg>
+        Copy Install Link
+      </button>
+      <div id="copyFeedback" class="copy-feedback">Link copied! Send it to your iPhone.</div>
+    </div>
+
+    <p class="install-note">DK Derby requires iOS 17 or later. Need help? Email us at <a href="mailto:hello@98chimp.ca">hello@98chimp.ca</a></p>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-main">
+        <a href="index.html" class="footer-wordmark">DK Derby</a>
+        <div class="footer-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Use</a>
+          <a href="https://www.98chimp.ca" onclick="if(document.referrer.includes('98chimp.ca')){event.preventDefault();history.back();}">98chimp.ca</a>
+        </div>
+        <div class="footer-badge" aria-label="App Store - Coming Soon">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="2" width="12" height="16" rx="2"/><line x1="10" y1="15" x2="10" y2="15.01" stroke-width="2"/></svg>
+          Coming Soon
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2015&ndash;2026 98% Chimp Inc.
+        <div class="footer-maple">Made in<img class="maple" src="assets/maple.svg" alt="Canada"></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function copyInstallLink() {
+      var link = 'https://www.98chimp.ca/DKDerby/install';
+      navigator.clipboard.writeText(link).then(function() {
+        var feedback = document.getElementById('copyFeedback');
+        feedback.classList.add('visible');
+        setTimeout(function() {
+          feedback.classList.remove('visible');
+        }, 3000);
+      });
+    }
+  </script>
+
+</body>
+</html>
