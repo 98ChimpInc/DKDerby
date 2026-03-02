@@ -1218,8 +1218,29 @@
     function scrollCarousel(direction) {
       const track = document.getElementById('carouselTrack');
       const cardWidth = 320 + 24; // card width + gap
+      const maxScroll = track.scrollWidth - track.clientWidth;
+
+      if (direction === 1 && track.scrollLeft >= maxScroll - 1) return;
+      if (direction === -1 && track.scrollLeft <= 1) return;
+
       track.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+      updateCarouselButtons();
     }
+
+    function updateCarouselButtons() {
+      setTimeout(function() {
+        const track = document.getElementById('carouselTrack');
+        const maxScroll = track.scrollWidth - track.clientWidth;
+        const btns = document.querySelectorAll('.carousel-btn');
+        btns[0].style.opacity = track.scrollLeft <= 1 ? '0.3' : '1';
+        btns[0].style.pointerEvents = track.scrollLeft <= 1 ? 'none' : 'auto';
+        btns[1].style.opacity = track.scrollLeft >= maxScroll - 1 ? '0.3' : '1';
+        btns[1].style.pointerEvents = track.scrollLeft >= maxScroll - 1 ? 'none' : 'auto';
+      }, 350);
+    }
+
+    // Set initial button state
+    updateCarouselButtons();
 
     // Touch swipe support for carousel
     (function() {
@@ -1235,6 +1256,10 @@
       track.addEventListener('touchmove', function(e) {
         const dx = startX - e.touches[0].clientX;
         track.scrollLeft = scrollStart + dx;
+      }, { passive: true });
+
+      track.addEventListener('touchend', function() {
+        updateCarouselButtons();
       }, { passive: true });
     })();
   </script>
