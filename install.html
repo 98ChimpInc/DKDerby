@@ -16,6 +16,9 @@
     var ua = navigator.userAgent || '';
     if (/iPhone|iPad|iPod/.test(ua)) {
       window.location.replace(TESTFLIGHT_LINK);
+      setTimeout(function() {
+        window.location.replace('https://www.98chimp.ca/DKDerby/');
+      }, 2000);
     }
   </script>
 
