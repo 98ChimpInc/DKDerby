@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="-10 -5 300 210" width="400" height="286" xmlns="http://www.w3.org/2000/svg">
+  <!-- DK Derby — Dunning-Kruger Curve (extracted from DKCurve React component) -->
+
+  <!-- Background terrain line -->
+  <path d="M 0 155 L 40 130 L 70 148 L 100 125 L 140 155 L 180 128 L 220 150 L 260 132 L 280 150 L 280 180 L 0 180 Z" stroke="#201A13" stroke-opacity="0.22" stroke-width="1" fill="none" stroke-linejoin="round"/>
+
+  <!-- Main curve fill -->
+  <path d="M 0 170 L 28 170 L 58 50 L 88 130 L 130 152 L 168 140 L 198 98 L 230 72 L 252 70 L 280 70 L 280 180 L 0 180 Z" stroke="#201A13" stroke-width="1.7" fill="#F7F1E4" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <!-- Main curve stroke (duplicate for layering) -->
+  <path d="M 28 172 L 58 52 L 88 132 L 130 154 L 168 142 L 198 100 L 230 74 L 252 72 L 280 72" stroke="#201A13" stroke-opacity="0.22" stroke-width="1" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <!-- Hatching: peak area -->
+  <path d="M 42 95 L 50 87 M 48 115 L 58 105 M 52 135 L 62 125 M 66 144 L 74 134 M 70 105 L 76 99" stroke="#201A13" stroke-opacity="0.33" stroke-width="0.9" stroke-linecap="round"/>
+
+  <!-- Hatching: valley -->
+  <path d="M 108 160 L 114 156 M 118 162 L 126 158 M 130 160 L 138 156 M 142 158 L 150 154" stroke="#201A13" stroke-opacity="0.25" stroke-width="0.8" stroke-linecap="round"/>
+
+  <!-- Hatching: slope of enlightenment -->
+  <path d="M 176 130 L 184 122 M 188 118 L 196 110 M 200 102 L 208 94 M 212 86 L 220 78" stroke="#201A13" stroke-opacity="0.3" stroke-width="0.9" stroke-linecap="round"/>
+
+  <!-- Hatching: plateau -->
+  <path d="M 232 78 L 240 76 M 248 80 L 256 78 M 264 78 L 272 76" stroke="#201A13" stroke-opacity="0.26" stroke-width="0.8" stroke-linecap="round"/>
+
+  <!-- Overconfidence arc (dashed, orange) -->
+  <path d="M 58 22 C 80 12, 110 14, 128 115 C 134 152, 170 145, 200 60 C 215 38, 240 40, 252 42" stroke="#C85A1C" stroke-opacity="0.32" stroke-width="1.2" stroke-dasharray="2 3" fill="none" stroke-linecap="round"/>
+
+  <!-- Label: FAST START -->
+  <g>
+    <line x1="58" y1="50" x2="58" y2="24" stroke="#201A13" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M 32 13 L 84 13 L 89 18.5 L 84 24 L 32 24 Z" stroke="#201A13" stroke-width="1.3" fill="#F7F1E4" stroke-linejoin="round"/>
+    <text x="57" y="20.4" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, monospace" font-size="5.4" font-weight="700" fill="#201A13" letter-spacing="0.2">FAST START</text>
+  </g>
+
+  <!-- Label: THE SLUMP -->
+  <g>
+    <line x1="128" y1="150" x2="128" y2="120" stroke="#201A13" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M 100 109 L 156 109 L 161 114.5 L 156 120 L 100 120 Z" stroke="#201A13" stroke-width="1.3" fill="#F7F1E4" stroke-linejoin="round"/>
+    <text x="127" y="116.4" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, monospace" font-size="5.4" font-weight="700" fill="#201A13" letter-spacing="0.2">THE SLUMP</text>
+  </g>
+
+  <!-- Label: BACK SADDLE -->
+  <g>
+    <line x1="200" y1="95" x2="200" y2="64" stroke="#201A13" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M 174 53 L 226 53 L 231 58.5 L 226 64 L 174 64 Z" stroke="#201A13" stroke-width="1.3" fill="#F7F1E4" stroke-linejoin="round"/>
+    <text x="199" y="60.4" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, monospace" font-size="5.4" font-weight="700" fill="#201A13" letter-spacing="0.2">BACK SADDLE</text>
+  </g>
+
+  <!-- Label: THE FINISH -->
+  <g>
+    <line x1="252" y1="70" x2="252" y2="42" stroke="#201A13" stroke-width="1.6" stroke-linecap="round"/>
+    <path d="M 226 31 L 278 31 L 283 36.5 L 278 42 L 226 42 Z" stroke="#201A13" stroke-width="1.3" fill="#F7F1E4" stroke-linejoin="round"/>
+    <text x="251" y="38.4" text-anchor="middle" font-family="'JetBrains Mono', 'SF Mono', ui-monospace, Menlo, monospace" font-size="5.4" font-weight="700" fill="#201A13" letter-spacing="0.2">THE FINISH</text>
+  </g>
+
+  <!-- Axis labels -->
+  <g>
+    <text x="14" y="108" font-family="'Caveat', 'Kalam', cursive" font-size="13" font-weight="700" fill="#201A13" transform="rotate(-90 14 108)" letter-spacing="0.5">CONFIDENCE</text>
+    <text x="104" y="196" font-family="'Caveat', 'Kalam', cursive" font-size="13" font-weight="700" fill="#201A13" letter-spacing="0.5">COMPETENCE  →</text>
+  </g>
+</svg>
