@@ -54,6 +54,11 @@
     h2, h3 { font-family: var(--serif); font-weight: 700; line-height: 1.2; }
 
     /* ── Nav (extracted from main page React render) ── */
+    /* ── App mode: hide chrome when viewed inside the iOS app (?app) ── */
+    body.app-mode nav,
+    body.app-mode footer { display: none !important; }
+    body.app-mode .support { padding-top: 40px; }
+
     .nav { position: sticky; top: 0px; z-index: 40; background: rgba(242, 236, 224, 0.82); backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%); border-bottom: 1px solid var(--ruleLight); line-height: normal; }
     .nav-inner { max-width: var(--maxw); margin: 0px auto; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; }
     .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 40px; }
@@ -248,5 +253,11 @@
     </div>
   </footer>
 
+  <script>
+    // Detect app mode from query parameter (?app)
+    if (new URLSearchParams(window.location.search).has('app')) {
+      document.body.classList.add('app-mode');
+    }
+  </script>
 </body>
 </html>
