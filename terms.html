@@ -13,201 +13,93 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Terms of Use — Dunning-Kruger Derby</title>
   <meta name="description" content="Terms of Use for Dunning-Kruger Derby, a daily confidence calibration game by 98%Chimp.">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&family=DM+Sans:wght@400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,700&family=JetBrains+Mono:wght@400;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
+    /* ── Design tokens (extracted from main page) ── */
     :root {
-      --cream: #F5F1EB;
-      --orange: #E67E22;
-      --orange-dark: #C0392B;
-      --dark: #2C2C2C;
-      --text: #1a1a1a;
-      --muted: #6c757d;
-      --card-bg: #FFFFFF;
-
-      --font-heading: 'Fraunces', serif;
-      --font-body: 'DM Sans', sans-serif;
-      --font-mono: 'Space Mono', monospace;
-
-      --radius: 8px;
+      --paper: #F2ECE0;
+      --ink: #201A13;
+      --orange: #C85A1C;
+      --inkMuted: #8A7A64;
+      --inkSoft: #5A4B3A;
+      --paperLight: #F7F1E4;
+      --paperDeep: #EADFCA;
+      --rule: #BFAF95;
+      --ruleLight: #D7C7AC;
+      --maxw: 1180px;
+      --serif: "Source Serif 4","Source Serif Pro",Georgia,serif;
+      --mono: "JetBrains Mono","SF Mono",ui-monospace,Menlo,monospace;
+      --hand: "Caveat","Kalam","Bradley Hand",cursive;
     }
 
     html { scroll-behavior: smooth; }
     body {
-      font-family: var(--font-body);
-      color: var(--text);
-      background: var(--cream);
+      font-family: var(--serif);
+      font-weight: 400;
+      color: var(--ink);
+      background: var(--paper);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
     a { color: inherit; text-decoration: none; }
-    button { font-family: inherit; cursor: pointer; border: none; }
-    h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; line-height: 1.2; }
+    h1 { font-family: var(--serif); font-weight: 700; font-style: italic; line-height: 1.2; }
+    h2, h3 { font-family: var(--serif); font-weight: 700; line-height: 1.2; }
 
-    /* ===== NAV ===== */
-    .nav {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: var(--cream);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-      padding: 16px 0;
-    }
-    .nav-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .nav-wordmark {
-      font-family: var(--font-heading);
-      font-size: 1.5rem;
-      font-weight: 300;
-      color: var(--orange);
-    }
-    .nav-cta {
-      background: var(--orange);
-      color: #fff;
-      padding: 10px 24px;
-      border-radius: var(--radius);
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: background 0.2s;
-    }
-    .nav-cta:hover { background: var(--orange-dark); }
+    /* ── Nav (extracted from main page React render) ── */
+    .nav { position: sticky; top: 0px; z-index: 40; background: rgba(242, 236, 224, 0.82); backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%); border-bottom: 1px solid var(--ruleLight); line-height: normal; }
+    .nav-inner { max-width: var(--maxw); margin: 0px auto; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 40px; }
 
-    /* ===== LEGAL CONTENT ===== */
-    .legal {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 80px 24px;
-    }
-    .legal h1 {
-      font-size: clamp(2rem, 4vw, 2.8rem);
-      margin-bottom: 12px;
-    }
-    .legal-date {
-      font-size: 0.9rem;
-      color: var(--muted);
-      margin-bottom: 40px;
-    }
+    /* ── Legal content ── */
+    .legal { max-width: 720px; margin: 0 auto; padding: 80px 24px; }
+    .legal h1 { font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 12px; }
+    .legal-date { font-size: 0.9rem; color: var(--inkMuted); margin-bottom: 40px; }
+    .legal h2 { font-size: 1.3rem; margin-top: 40px; margin-bottom: 12px; }
+    .legal p { font-size: 0.95rem; line-height: 1.7; margin-bottom: 16px; }
+    .legal ul { margin-bottom: 16px; padding-left: 24px; }
+    .legal li { font-size: 0.95rem; line-height: 1.7; margin-bottom: 8px; }
+    .legal a { color: var(--orange); transition: color 0.2s; }
+    .legal a:hover { opacity: 0.75; }
+
     .legal-disclaimer {
-      background: var(--card-bg);
-      border-left: 4px solid var(--orange);
+      background: var(--paperLight);
+      border-left: 3px solid var(--orange);
       padding: 20px 24px;
-      border-radius: var(--radius);
+      border-radius: 8px;
       margin-bottom: 48px;
       font-size: 0.95rem;
       line-height: 1.6;
       font-style: italic;
-      color: var(--text);
+      color: var(--ink);
     }
-    .legal h2 {
-      font-size: 1.3rem;
-      margin-top: 40px;
-      margin-bottom: 12px;
-      color: var(--text);
-    }
-    .legal p {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      margin-bottom: 16px;
-      color: var(--text);
-    }
-    .legal a {
-      color: var(--orange);
-      transition: color 0.2s;
-    }
-    .legal a:hover { color: var(--orange-dark); }
 
-    /* ===== FOOTER ===== */
-    .footer {
-      background: var(--dark);
-      color: #fff;
-      padding: 48px 0 24px;
-    }
-    .footer-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-    .footer-main {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 24px;
-      margin-bottom: 32px;
-    }
-    .footer-wordmark {
-      font-family: var(--font-heading);
-      font-size: 1.3rem;
-      font-weight: 300;
-      color: var(--orange);
-    }
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-    .footer-links a {
-      font-size: 0.9rem;
-      color: rgba(255, 255, 255, 0.7);
-      transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--orange); }
-    .footer-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: var(--radius);
-      font-size: 0.85rem;
-      color: rgba(255, 255, 255, 0.4);
-    }
-    .footer-bottom {
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      padding-top: 20px;
-      text-align: center;
-      font-size: 0.8rem;
-      color: rgba(255, 255, 255, 0.4);
-    }
-    .footer-maple {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      margin-top: 8px;
-      font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.4);
-    }
-    .footer-maple .maple {
-      width: 16px;
-      height: 16px;
-      opacity: 0.4;
-    }
+    /* ── Responsive ── */
     @media (max-width: 768px) {
-      .footer-main {
-        flex-direction: column;
-        text-align: center;
-      }
-      .footer-links { justify-content: center; }
+      .nav-inner { padding: 12px 20px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ===== NAV ===== -->
-  <nav class="nav" role="navigation" aria-label="Main navigation">
+  <!-- ===== NAV (extracted from main page) ===== -->
+  <nav class="nav">
     <div class="nav-inner">
-      <a href="index.html" class="nav-wordmark">DK Derby</a>
-      <a href="index.html#signup" class="nav-cta">Get Early Access</a>
+      <a href="index.html" style="display:flex; align-items:baseline; gap:8px; text-decoration:none; color:var(--ink);">
+        <span style="font-family:var(--mono); font-size:14px; letter-spacing:3px; font-weight:700;">DK·DERBY</span>
+      </a>
+      <div style="display:flex; align-items:center; gap:24px;">
+        <a href="index.html#how" style="font-family:var(--mono); font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--inkMuted); text-decoration:none;">How it works</a>
+        <a href="index.html#science" style="font-family:var(--mono); font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--inkMuted); text-decoration:none;">The science</a>
+        <a href="index.html#join" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:9px 18px; font-family:var(--serif); font-size:14.5px; font-weight:600; letter-spacing:0.2px; color:var(--paper); background:var(--ink); border:1.5px solid var(--ink); border-radius:8px; text-decoration:none; cursor:pointer; transition:transform 80ms;">Get early access</a>
+      </div>
     </div>
   </nav>
 
@@ -246,24 +138,21 @@
     <p>If you have questions about these Terms of Use, please contact us at <a href="mailto:hello@98chimp.ca">hello@98chimp.ca</a>.</p>
   </main>
 
-  <!-- ===== FOOTER ===== -->
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-main">
-        <a href="index.html" class="footer-wordmark">DK Derby</a>
-        <div class="footer-links">
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms of Use</a>
-          <a href="https://www.98chimp.ca" onclick="if(document.referrer.includes('98chimp.ca')){event.preventDefault();history.back();}">98chimp.ca</a>
-        </div>
-        <div class="footer-badge" aria-label="App Store - Coming Soon">
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" stroke-linecap="round"><rect x="4" y="2" width="12" height="16" rx="2"/><line x1="10" y1="15" x2="10" y2="15.01" stroke-width="2"/></svg>
-          Coming Soon
-        </div>
+  <!-- ===== FOOTER (extracted from main page) ===== -->
+  <footer style="border-top: 1px solid var(--rule); background: var(--paperDeep); line-height: normal;">
+    <div class="wrap" style="padding: 34px 40px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between;">
+      <div style="display:flex; align-items:baseline; gap:16px;">
+        <a href="index.html" style="font-family:var(--mono); font-size:14px; letter-spacing:3px; font-weight:700; color:var(--ink); text-decoration:none;">DK·DERBY</a>
+        <span style="font-family:var(--mono); font-size:11px; letter-spacing:1.5px; color:var(--inkMuted);">COMING SOON</span>
       </div>
-      <div class="footer-bottom">
-        &copy; 2015&ndash;2026 98% Chimp Inc.
-        <div class="footer-maple">Made in<img class="maple" src="assets/maple.svg" alt="Canada"></div>
+      <div style="display:flex; gap:22px; flex-wrap:wrap; font-family:var(--mono); font-size:12px; letter-spacing:0.5px;">
+        <a href="privacy.html" style="color:var(--inkSoft); text-decoration:none;">Privacy</a>
+        <a href="terms.html" style="color:var(--inkSoft); text-decoration:none;">Terms</a>
+        <a href="support.html" style="color:var(--inkSoft); text-decoration:none;">Support</a>
+        <a href="https://www.98chimp.ca" style="color:var(--inkSoft); text-decoration:none;">98chimp.ca</a>
+      </div>
+      <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.5px; color:var(--inkMuted); text-align:center;">
+        &copy; 2015&ndash;2026 98% Chimp Inc. &middot; Made in Canada<img src="assets/maple.svg" alt="Maple leaf" style="display:inline-block; width:14px; height:14px; vertical-align:middle; margin-left:4px;">
       </div>
     </div>
   </footer>

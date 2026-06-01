@@ -212,7 +212,18 @@ document.addEventListener('DOMContentLoaded', async function() {
       '      if (_cardWrap) { _cardWrap.style.flex = "1"; }' +
       '    }' +
       '  }' +
-      '  /* 4. Maple leaf next to "Made in Canada" — single injection only */' +
+      '  /* 4. Inject Support link into footer nav */' +
+      '  var _footerLinks = document.querySelectorAll("footer a");' +
+      '  _footerLinks.forEach(function(a){' +
+      '    if (a.textContent.trim() === "Terms" && !a.parentElement.querySelector("[href=\\"support.html\\"]")) {' +
+      '      var sup = document.createElement("a");' +
+      '      sup.href = "support.html";' +
+      '      sup.textContent = "Support";' +
+      '      sup.style.cssText = a.style.cssText;' +
+      '      a.parentElement.insertBefore(sup, a.nextSibling);' +
+      '    }' +
+      '  });' +
+      '  /* 5. Maple leaf next to "Made in Canada" — single injection only */' +
       '  var _found = false;' +
       '  document.querySelectorAll("a, span, div, p").forEach(function(el){' +
       '    if (_found) return;' +

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S2YQT8KYY5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-S2YQT8KYY5');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support — Dunning-Kruger Derby</title>
+  <meta name="description" content="Get help with Dunning-Kruger Derby. FAQs, contact information, and troubleshooting for the daily confidence calibration game by 98%Chimp.">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,700&family=JetBrains+Mono:wght@400;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── Design tokens (extracted from main page) ── */
+    :root {
+      --paper: #F2ECE0;
+      --ink: #201A13;
+      --orange: #C85A1C;
+      --inkMuted: #8A7A64;
+      --inkSoft: #5A4B3A;
+      --paperLight: #F7F1E4;
+      --paperDeep: #EADFCA;
+      --rule: #BFAF95;
+      --ruleLight: #D7C7AC;
+      --maxw: 1180px;
+      --serif: "Source Serif 4","Source Serif Pro",Georgia,serif;
+      --mono: "JetBrains Mono","SF Mono",ui-monospace,Menlo,monospace;
+      --hand: "Caveat","Kalam","Bradley Hand",cursive;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--serif);
+      font-weight: 400;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    h1 { font-family: var(--serif); font-weight: 700; font-style: italic; line-height: 1.2; }
+    h2, h3 { font-family: var(--serif); font-weight: 700; line-height: 1.2; }
+
+    /* ── Nav (extracted from main page React render) ── */
+    .nav { position: sticky; top: 0px; z-index: 40; background: rgba(242, 236, 224, 0.82); backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%); border-bottom: 1px solid var(--ruleLight); line-height: normal; }
+    .nav-inner { max-width: var(--maxw); margin: 0px auto; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 40px; }
+
+    /* ── Legal content ── */
+    .legal { max-width: 720px; margin: 0 auto; padding: 80px 24px; }
+    .legal h1 { font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 12px; }
+    .legal-date { font-size: 0.9rem; color: var(--inkMuted); margin-bottom: 40px; }
+    .legal h2 { font-size: 1.3rem; margin-top: 40px; margin-bottom: 12px; }
+    .legal p { font-size: 0.95rem; line-height: 1.7; margin-bottom: 16px; }
+    .legal ul { margin-bottom: 16px; padding-left: 24px; }
+    .legal li { font-size: 0.95rem; line-height: 1.7; margin-bottom: 8px; }
+    .legal a { color: var(--orange); transition: color 0.2s; }
+    .legal a:hover { opacity: 0.75; }
+
+    /* ── Support-specific ── */
+    .support { max-width: 720px; margin: 0 auto; padding: 80px 24px; }
+    .support h1 { font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 12px; }
+    .support-date { font-size: 0.9rem; color: var(--inkMuted); margin-bottom: 24px; }
+    .support-intro { font-size: 1.05rem; line-height: 1.7; margin-bottom: 48px; color: var(--ink); }
+    .support h2 { font-size: 1.5rem; margin-top: 56px; margin-bottom: 24px; color: var(--ink); }
+    .support h3 { font-size: 1.15rem; margin-top: 36px; margin-bottom: 12px; color: var(--ink); }
+    .support p { font-size: 0.95rem; line-height: 1.7; margin-bottom: 16px; color: var(--ink); }
+    .support ul { margin-bottom: 16px; padding-left: 24px; }
+    .support li { font-size: 0.95rem; line-height: 1.7; margin-bottom: 8px; color: var(--ink); }
+    .support a { color: var(--orange); transition: color 0.2s; }
+    .support a:hover { opacity: 0.75; }
+
+    /* Contact card */
+    .contact-card {
+      background: var(--paperLight);
+      border: 1.5px solid var(--ink);
+      border-radius: 10px;
+      padding: 28px 32px;
+      margin-bottom: 16px;
+    }
+    .contact-card p { margin-bottom: 8px; }
+    .contact-card p:last-child { margin-bottom: 0; }
+    .contact-email {
+      font-family: var(--mono);
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--orange);
+    }
+    .contact-note { font-size: 0.9rem; color: var(--inkMuted); }
+
+    /* FAQ callout */
+    .faq-callout {
+      background: var(--paperLight);
+      border-left: 3px solid var(--orange);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-top: 12px;
+      margin-bottom: 24px;
+    }
+    .faq-callout p { margin-bottom: 8px; }
+    .faq-callout p:last-child { margin-bottom: 0; }
+
+    /* Legal links section */
+    .legal-links {
+      display: flex; flex-wrap: wrap; gap: 16px;
+      margin-top: 12px; margin-bottom: 16px;
+    }
+    .legal-links a {
+      background: var(--paperLight);
+      border: 1.5px solid var(--ink);
+      border-radius: 10px;
+      padding: 14px 20px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--ink);
+      transition: background 0.2s;
+    }
+    .legal-links a:hover { background: var(--paperDeep); color: var(--ink); }
+
+    /* Closing */
+    .support-closing {
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(32, 26, 19, 0.15);
+    }
+    .support-closing p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--inkMuted);
+      font-style: italic;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav-inner { padding: 12px 20px; }
+      .legal-links { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV (extracted from main page) ===== -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" style="display:flex; align-items:baseline; gap:8px; text-decoration:none; color:var(--ink);">
+        <span style="font-family:var(--mono); font-size:14px; letter-spacing:3px; font-weight:700;">DK·DERBY</span>
+      </a>
+      <div style="display:flex; align-items:center; gap:24px;">
+        <a href="index.html#how" style="font-family:var(--mono); font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--inkMuted); text-decoration:none;">How it works</a>
+        <a href="index.html#science" style="font-family:var(--mono); font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--inkMuted); text-decoration:none;">The science</a>
+        <a href="index.html#join" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:9px 18px; font-family:var(--serif); font-size:14.5px; font-weight:600; letter-spacing:0.2px; color:var(--paper); background:var(--ink); border:1.5px solid var(--ink); border-radius:8px; text-decoration:none; cursor:pointer; transition:transform 80ms;">Get early access</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== SUPPORT ===== -->
+  <main class="support">
+    <h1>Support</h1>
+    <p class="support-date">Last updated: June 2026</p>
+    <p class="support-intro">Need help with DK Derby? We're a small team building the confidence calibration game we wished existed ... we read every message and reply personally.</p>
+
+    <!-- Get in touch -->
+    <h2>Get in touch</h2>
+    <div class="contact-card">
+      <p><a href="mailto:support@98chimp.ca" class="contact-email">support@98chimp.ca</a></p>
+      <p class="contact-note">We aim to reply within one business day.</p>
+    </div>
+
+    <!-- FAQ -->
+    <h2>Frequently asked questions</h2>
+
+    <h3>How does DK Derby work?</h3>
+    <p>DK Derby is a daily confidence calibration game. Each day, you're presented with questions ... but before you see the answer, you commit to a confidence level. The game then shows you how well your confidence matched reality. Play long enough and you'll start to see the gap between what you think you know and what you actually know.</p>
+
+    <h3>What is confidence calibration?</h3>
+    <p>Calibration is the alignment between how sure you are and how often you're right. A well-calibrated person who says they're 80% confident is correct about 80% of the time. Most people are overconfident ... DK Derby makes that visible.</p>
+
+    <h3>Why is it called Dunning-Kruger Derby?</h3>
+    <p>The Dunning-Kruger effect is a well-documented cognitive bias where people with limited knowledge in a domain tend to overestimate their competence. DK Derby turns that insight into a daily practice ... not to make you feel bad, but to help you notice the gap and close it over time.</p>
+
+    <h3>How do subscriptions work?</h3>
+    <p>DK Derby will offer subscription plans through the App Store when it launches. Details on pricing and trial periods will be available at launch. Subscriptions will be managed entirely through the App Store.</p>
+
+    <h3>How do I delete my account?</h3>
+    <p>Inside the app, open Settings &rarr; Account &rarr; Delete Account. This permanently removes your account and all associated data. If you have an active subscription, cancel it via your iPhone Settings &rarr; Apple Account &rarr; Subscriptions before deleting your account.</p>
+    <p>Prefer email? Write to us at <a href="mailto:privacy@98chimp.ca">privacy@98chimp.ca</a> and we'll handle the deletion within 7 days.</p>
+
+    <h3>The app isn't loading or crashes</h3>
+    <ul>
+      <li>Check your internet connection</li>
+      <li>Make sure you're running the latest version of DK Derby from the App Store</li>
+      <li>Try force-quitting the app and reopening it</li>
+      <li>If the issue persists, email <a href="mailto:support@98chimp.ca">support@98chimp.ca</a> with your iPhone model and iOS version</li>
+    </ul>
+
+    <h3>Is DK Derby suitable for children?</h3>
+    <p>DK Derby is intended for users 13 and older. The questions span general knowledge, science, history, and current events at an adult level. We do not knowingly collect personal information from children under 13.</p>
+
+    <!-- Privacy & Legal -->
+    <h2>Privacy &amp; Legal</h2>
+    <div class="legal-links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="terms.html">Terms of Use</a>
+      <a href="https://www.apple.com/legal/internet-services/itunes/dev/stdeula/">Apple Standard EULA</a>
+    </div>
+
+    <!-- Still need help -->
+    <h2>Still need help?</h2>
+    <p>The fastest way to reach us is email. Tell us: what were you trying to do, what happened instead, your iPhone model and iOS version, and the version of DK Derby.</p>
+    <div class="contact-card">
+      <p><a href="mailto:support@98chimp.ca" class="contact-email">support@98chimp.ca</a></p>
+    </div>
+
+    <!-- Closing -->
+    <div class="support-closing">
+      <p>DK Derby is built on peer-reviewed science. Designed to humble you, gently. Thank you for being part of the early community.</p>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER (extracted from main page) ===== -->
+  <footer style="border-top: 1px solid var(--rule); background: var(--paperDeep); line-height: normal;">
+    <div class="wrap" style="padding: 34px 40px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between;">
+      <div style="display:flex; align-items:baseline; gap:16px;">
+        <a href="index.html" style="font-family:var(--mono); font-size:14px; letter-spacing:3px; font-weight:700; color:var(--ink); text-decoration:none;">DK·DERBY</a>
+        <span style="font-family:var(--mono); font-size:11px; letter-spacing:1.5px; color:var(--inkMuted);">COMING SOON</span>
+      </div>
+      <div style="display:flex; gap:22px; flex-wrap:wrap; font-family:var(--mono); font-size:12px; letter-spacing:0.5px;">
+        <a href="privacy.html" style="color:var(--inkSoft); text-decoration:none;">Privacy</a>
+        <a href="terms.html" style="color:var(--inkSoft); text-decoration:none;">Terms</a>
+        <a href="support.html" style="color:var(--inkSoft); text-decoration:none;">Support</a>
+        <a href="https://www.98chimp.ca" style="color:var(--inkSoft); text-decoration:none;">98chimp.ca</a>
+      </div>
+      <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.5px; color:var(--inkMuted); text-align:center;">
+        &copy; 2015&ndash;2026 98% Chimp Inc. &middot; Made in Canada<img src="assets/maple.svg" alt="Maple leaf" style="display:inline-block; width:14px; height:14px; vertical-align:middle; margin-left:4px;">
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
