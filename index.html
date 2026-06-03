@@ -119,6 +119,27 @@ document.addEventListener('DOMContentLoaded', async function() {
       template = template.slice(0, i) + resourceScript + template.slice(i);
     }
 
+    // ── Inject responsive CSS overrides ─────────────────────────────
+    var responsiveCSS = '<' + 'style>' +
+      '@media (max-width: 768px) {' +
+      '  /* Nav: hide section links, keep wordmark + CTA only */' +
+      '  .nav-inner a[href*="#how"],' +
+      '  .nav-inner a[href*="#science"] { display: none !important; }' +
+      '  .nav-inner { padding: 12px 20px !important; }' +
+      '' +
+      '  /* CTA grid: stack to single column */' +
+      '  .cta-grid {' +
+      '    grid-template-columns: 1fr !important;' +
+      '    gap: 32px !important;' +
+      '  }' +
+      '  /* Reset SVG max-height for full-width single column */' +
+      '  .cta-grid svg[viewBox] {' +
+      '    max-height: none !important;' +
+      '  }' +
+      '}' +
+      '</' + 'style>';
+    template = template.replace(/<\/head>/i, responsiveCSS + '</head>');
+
     // ── Inject post-render adjustment script before </body> ──────────
     // This script becomes part of the new document so it survives
     // replaceWith(). It polls for React render, then applies tweaks.
