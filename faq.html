@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S2YQT8KYY5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-S2YQT8KYY5');
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>How Scoring Works — Dunning-Kruger Derby</title>
+  <meta name="description" content="How every stat in DK Derby is calculated — confidence, competence, calibration gap, performance badges, streaks, and more. A plain-language guide to the numbers behind the game.">
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,700;1,8..60,700&family=JetBrains+Mono:wght@400;700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    /* ── Design tokens (extracted from main page) ── */
+    :root {
+      --paper: #F2ECE0;
+      --ink: #201A13;
+      --orange: #C85A1C;
+      --inkMuted: #8A7A64;
+      --inkSoft: #5A4B3A;
+      --paperLight: #F7F1E4;
+      --paperDeep: #EADFCA;
+      --rule: #BFAF95;
+      --ruleLight: #D7C7AC;
+      --maxw: 1180px;
+      --serif: "Source Serif 4","Source Serif Pro",Georgia,serif;
+      --mono: "JetBrains Mono","SF Mono",ui-monospace,Menlo,monospace;
+      --hand: "Caveat","Kalam","Bradley Hand",cursive;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--serif);
+      font-weight: 400;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    h1 { font-family: var(--serif); font-weight: 700; font-style: italic; line-height: 1.2; }
+    h2, h3 { font-family: var(--serif); font-weight: 700; line-height: 1.2; }
+
+    /* ── App mode: hide chrome when viewed inside the iOS app (?app) ── */
+    body.app-mode nav,
+    body.app-mode footer { display: none !important; }
+    body.app-mode .faq { padding-top: 40px; }
+
+    /* ── Nav + wrap (exact copy from main page stylesheet) ── */
+    .nav { position: sticky; top: 0px; z-index: 40; background: rgba(242, 236, 224, 0.82); backdrop-filter: blur(10px) saturate(140%); -webkit-backdrop-filter: blur(10px) saturate(140%); border-bottom: 1px solid var(--ruleLight); line-height: normal; }
+    .nav-inner { max-width: var(--maxw); margin: 0px auto; padding: 14px 40px; display: flex; align-items: center; justify-content: space-between; }
+    .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 40px; }
+
+    /* ── FAQ content ── */
+    .faq { max-width: 720px; margin: 0 auto; padding: 80px 24px; }
+    .faq h1 { font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 12px; }
+    .faq-subtitle { font-size: 0.9rem; color: var(--inkMuted); margin-bottom: 24px; }
+    .faq-intro { font-size: 1.05rem; line-height: 1.7; margin-bottom: 20px; color: var(--ink); }
+    .faq h2 { font-size: 1.4rem; margin-top: 56px; margin-bottom: 16px; color: var(--ink); padding-top: 12px; border-top: 1px solid rgba(32, 26, 19, 0.12); }
+    .faq h2:first-of-type { border-top: none; }
+    .faq h3 { font-size: 1.15rem; margin-top: 36px; margin-bottom: 12px; color: var(--ink); }
+    .faq p { font-size: 0.95rem; line-height: 1.7; margin-bottom: 16px; color: var(--ink); }
+    .faq ul, .faq ol { margin-bottom: 16px; padding-left: 24px; }
+    .faq li { font-size: 0.95rem; line-height: 1.7; margin-bottom: 8px; color: var(--ink); }
+    .faq a { color: var(--orange); transition: color 0.2s; }
+    .faq a:hover { opacity: 0.75; }
+    .faq strong { font-weight: 700; }
+
+    /* Formula callout */
+    .formula {
+      background: var(--paperLight);
+      border-left: 3px solid var(--orange);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-top: 8px;
+      margin-bottom: 16px;
+      font-family: var(--mono);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--ink);
+      overflow-x: auto;
+    }
+
+    /* Example callout */
+    .example {
+      background: var(--paperLight);
+      border: 1.5px solid var(--ink);
+      border-radius: 10px;
+      padding: 20px 24px;
+      margin-top: 8px;
+      margin-bottom: 24px;
+    }
+    .example p { margin-bottom: 8px; }
+    .example p:last-child { margin-bottom: 0; }
+    .example-label {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--inkMuted);
+      margin-bottom: 8px;
+    }
+
+    /* Note / aside */
+    .faq-note {
+      background: var(--paperLight);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-top: 8px;
+      margin-bottom: 24px;
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--inkSoft);
+      font-style: italic;
+    }
+    .faq-note p { font-size: 0.9rem; color: var(--inkSoft); margin-bottom: 8px; }
+    .faq-note p:last-child { margin-bottom: 0; }
+
+    /* Badge table */
+    .badge-table { width: 100%; border-collapse: collapse; margin: 12px 0 24px; font-size: 0.9rem; }
+    .badge-table th { text-align: left; font-weight: 700; padding: 10px 12px; border-bottom: 2px solid var(--rule); font-size: 0.8rem; font-family: var(--mono); letter-spacing: 0.5px; text-transform: uppercase; color: var(--inkMuted); }
+    .badge-table td { padding: 10px 12px; border-bottom: 1px solid var(--ruleLight); vertical-align: top; line-height: 1.6; }
+    .badge-table tr:last-child td { border-bottom: none; }
+    .badge-name { font-weight: 700; white-space: nowrap; }
+
+    /* Table of contents */
+    .toc {
+      background: var(--paperLight);
+      border: 1.5px solid var(--ink);
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin-bottom: 48px;
+    }
+    .toc-title {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--inkMuted);
+      margin-bottom: 12px;
+    }
+    .toc ol { padding-left: 20px; margin-bottom: 0; }
+    .toc li { font-size: 0.9rem; line-height: 1.8; margin-bottom: 2px; }
+    .toc a { color: var(--orange); text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* Closing section */
+    .faq-closing {
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(32, 26, 19, 0.15);
+    }
+    .faq-closing p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--inkMuted);
+      font-style: italic;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .nav-inner { padding: 12px 20px; }
+      .badge-table { font-size: 0.82rem; }
+      .badge-table th, .badge-table td { padding: 8px 8px; }
+      .formula { font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAV (extracted from main page) ===== -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="index.html" style="display:flex; align-items:baseline; gap:8px; text-decoration:none; color:var(--ink);">
+        <span style="font-family:var(--mono); font-size:14px; letter-spacing:3px; font-weight:700;">DK·DERBY</span>
+      </a>
+      <div style="display:flex; align-items:center; gap:24px;">
+        <a href="index.html#how" style="font-family:var(--mono); font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--inkMuted); text-decoration:none;">How it works</a>
+        <a href="index.html#science" style="font-family:var(--mono); font-size:12px; letter-spacing:1.5px; text-transform:uppercase; color:var(--inkMuted); text-decoration:none;">The science</a>
+        <a href="index.html#join" style="display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:9px 18px; font-family:var(--serif); font-size:14.5px; font-weight:600; letter-spacing:0.2px; color:var(--paper); background:var(--ink); border:1.5px solid var(--ink); border-radius:8px; text-decoration:none; cursor:pointer; transition:transform 80ms;">Get early access</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== FAQ CONTENT ===== -->
+  <main class="faq">
+    <h1>How Scoring Works</h1>
+    <p class="faq-subtitle">Last updated: June 2026</p>
+
+    <p class="faq-intro">DK Derby is built around one idea from psychology: the <strong>Dunning-Kruger effect</strong>, where people who know the least are often the most sure of themselves, and genuine experts tend to second-guess what they actually know. Every question in the app asks you to do two things ... rate how confident you are <em>before</em> you answer, then answer.</p>
+
+    <p class="faq-intro">The stats below all flow from that single move. They measure the gap between what you <em>think</em> you know and what you <em>actually</em> know, and they show you, over time, which direction your gut leans.</p>
+
+    <p class="faq-intro" style="margin-bottom: 8px;">Two scales run through everything:</p>
+    <ul style="margin-bottom: 36px;">
+      <li><strong>Confidence</strong> is a 0&ndash;100 value <em>you</em> set on the slider, in steps of 5.</li>
+      <li><strong>Competence / accuracy</strong> is a 0&ndash;100 value the <em>quiz</em> computes from whether you were right.</li>
+    </ul>
+
+    <!-- Table of contents -->
+    <div class="toc">
+      <p class="toc-title">On this page</p>
+      <ol>
+        <li><a href="#confidence">Confidence</a></li>
+        <li><a href="#competence">Competence / Accuracy</a></li>
+        <li><a href="#calibration-gap">Calibration gap</a></li>
+        <li><a href="#gap-pts">GAP &middot; PTS readout</a></li>
+        <li><a href="#badges">Performance badges</a></li>
+        <li><a href="#streaks">Current &amp; longest streak</a></li>
+        <li><a href="#streak-freezes">Streak freezes</a></li>
+        <li><a href="#logbook">30-day logbook</a></li>
+        <li><a href="#category-gaps">Per-category gaps</a></li>
+        <li><a href="#counters">Calibration counters</a></li>
+        <li><a href="#lifetime">Lifetime averages</a></li>
+        <li><a href="#analytics-tiers">Analytics tiers</a></li>
+        <li><a href="#why-calibration">Why this app cares about the gap</a></li>
+      </ol>
+    </div>
+
+    <!-- ── Confidence ── -->
+    <h2 id="confidence">Confidence</h2>
+    <p>How sure you said you were, on average ... your self-rated certainty before seeing whether you were right. You set it per question on the confidence slider (0&ndash;100, in steps of 5); the app averages those ratings.</p>
+
+    <div class="formula">average confidence = (sum of every per-question confidence) &divide; (number of questions answered)</div>
+
+    <p><strong>How to read it:</strong> A high number means you tend to commit ... you back yourself. A low number means you hedge. Neither is &ldquo;good&rdquo; on its own; confidence only becomes meaningful when you line it up against how accurate you actually were (see <a href="#calibration-gap">Calibration gap</a>). On a single day&rsquo;s result it&rsquo;s the average across that session&rsquo;s questions; on the Stats screen it&rsquo;s your lifetime average across every question you have ever answered.</p>
+
+    <div class="example">
+      <p class="example-label">Example</p>
+      <p>You rate three questions 80%, 60%, and 100%. Your confidence for that session is (80 + 60 + 100) &divide; 3 = <strong>80%</strong>.</p>
+    </div>
+
+    <!-- ── Competence / Accuracy ── -->
+    <h2 id="competence">Competence / Accuracy</h2>
+    <p>How well you actually did ... the percentage of questions you got right. The app uses the words &ldquo;competence&rdquo; and &ldquo;accuracy&rdquo; for the same underlying number: the share of your answers that were correct. The per-session result screen labels it <strong>COMPETENCE</strong>; the Stats screen labels it <strong>ACCURACY</strong>.</p>
+
+    <div class="formula">accuracy % = (correct answers &divide; questions answered) &times; 100</div>
+
+    <p><strong>How to read it:</strong> This is the honest scoreboard ... it ignores how you <em>felt</em> and just counts right answers. 100% means you nailed everything; 0% means you missed everything. It&rsquo;s deliberately shown right next to Confidence so you can see, at a glance, whether your certainty was earned.</p>
+
+    <div class="example">
+      <p class="example-label">Example</p>
+      <p>You answer 5 questions and get 3 right. Your accuracy is 3 &divide; 5 &times; 100 = <strong>60%</strong>.</p>
+    </div>
+
+    <div class="faq-note">
+      <p><strong>Naming note:</strong> &ldquo;Competence&rdquo; and &ldquo;Accuracy&rdquo; are the same value computed the same way. The two labels exist for tone ... &ldquo;competence&rdquo; pairs more naturally with &ldquo;confidence&rdquo; on the result card, while &ldquo;accuracy&rdquo; is the plainer word on the analytical Stats screen.</p>
+    </div>
+
+    <!-- ── Calibration gap ── -->
+    <h2 id="calibration-gap">Calibration Gap (Points)</h2>
+    <p>The heart of the app. Your calibration gap is the distance between how confident you were and how well you actually did, expressed in points on the same 0&ndash;100 scale. It is <strong>signed</strong>, and the sign is the whole point: a positive gap means you were <em>overconfident</em> (you climbed &ldquo;Mount Stupid&rdquo;), a negative gap means you were <em>underconfident</em> (the impostor zone), and zero means you were perfectly calibrated.</p>
+
+    <div class="formula">gap = confidence &minus; competence<br><br>&gt; 0 &nbsp;overconfident&emsp;&emsp;&lt; 0 &nbsp;underconfident&emsp;&emsp;0 &nbsp;well-calibrated</div>
+
+    <p><strong>How to read it:</strong> Read the sign first, the size second. <strong>+20</strong> means &ldquo;I was 20 points more sure than I deserved to be.&rdquo; <strong>&minus;20</strong> means &ldquo;I actually knew 20 points more than I gave myself credit for.&rdquo; A gap near 0 in either direction means your confidence tracked reality closely ... that&rsquo;s the skill the app is training.</p>
+
+    <div class="example">
+      <p class="example-label">Example</p>
+      <p>You felt 85% confident across a session but scored 60%. Your gap is 85 &minus; 60 = <strong>+25</strong> ... a strongly overconfident day.</p>
+      <p>If instead you&rsquo;d felt 50% confident and scored 75%, your gap would be 50 &minus; 75 = <strong>&minus;25</strong> ... you sold yourself short.</p>
+    </div>
+
+    <!-- Signed vs absolute explainer -->
+    <h3>Signed gap vs. absolute gap ... two different questions</h3>
+    <p>There are two honest ways to average gaps over many questions, and they answer different things:</p>
+    <ul>
+      <li><strong>Mean signed gap</strong> (confidence &minus; competence, keeping the sign) = your <strong>directional bias</strong>. It tells you which way you <em>lean</em> overall ... chronically cocky, or chronically modest. Overconfident questions and underconfident ones partly cancel out, so a near-zero mean signed gap can mean &ldquo;balanced&rdquo; <em>or</em> &ldquo;wildly swingy but even in both directions.&rdquo;</li>
+      <li><strong>Mean absolute gap</strong> (averaging |confidence &minus; competence|) = your <strong>calibration tightness</strong>. It ignores direction and just measures how far off you were, question by question. A small absolute gap means your confidence reliably matches your accuracy; a large one means you&rsquo;re often far off, regardless of which way.</li>
+    </ul>
+    <p>Both are useful. The signed average tells you <em>which way you&rsquo;re wrong</em>; the absolute average tells you <em>how wrong you are</em>. DK Derby standardises on the <strong>signed</strong> convention for the headline gap because, for a Dunning-Kruger app, the direction of your error is the more interesting story.</p>
+
+    <!-- ── GAP · PTS ── -->
+    <h2 id="gap-pts">GAP &middot; PTS Readout</h2>
+    <p>The single-number gap shown on the day&rsquo;s result card and the Home recap row, sitting beside CONFIDENCE and COMPETENCE. It&rsquo;s the calibration gap for that one surface (a session, or your lifetime), rendered as a signed points value.</p>
+
+    <div class="formula">GAP = confidence &minus; competence &nbsp;&nbsp;(shown as +N, &minus;N, or 0)</div>
+
+    <p><strong>How to read it:</strong> It&rsquo;s the same calibration gap described above, just the compact on-screen form. The &ldquo;&middot; PTS&rdquo; suffix is the unit ... points on the 0&ndash;100 scale, not a percentage of anything. A <strong>+</strong> next to it is overconfidence; a <strong>&minus;</strong> is underconfidence.</p>
+
+    <div class="example">
+      <p class="example-label">Example</p>
+      <p>A result card reading <strong>CONFIDENCE 80 &middot; COMPETENCE 55 &middot; GAP +25</strong> is telling you that on that day you were 25 points more confident than correct.</p>
+    </div>
+
+    <!-- ── Performance badges ── -->
+    <h2 id="badges">Performance Badges</h2>
+    <p>A single label that captures the <em>shape</em> of a result ... not just whether you did well, but how your confidence and competence combined. After each session the app picks exactly one badge by checking your accuracy and confidence against a fixed ladder of rules, top to bottom, and awarding the first one that fits.</p>
+
+    <table class="badge-table">
+      <thead>
+        <tr>
+          <th>Badge</th>
+          <th>Condition</th>
+          <th>What it means</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="badge-name">Humble Genius</td>
+          <td>accuracy &ge; 80 <strong>and</strong> confidence &le; 70</td>
+          <td>You did great and stayed modest ... knew your stuff without showing off.</td>
+        </tr>
+        <tr>
+          <td class="badge-name">Grounded Learner</td>
+          <td>accuracy &ge; 60 <strong>and</strong> confidence &le; 80</td>
+          <td>Solid and sensible ... decent results, restrained confidence.</td>
+        </tr>
+        <tr>
+          <td class="badge-name">Mount Stupid Climber</td>
+          <td>accuracy &le; 50 <strong>and</strong> confidence &ge; 70</td>
+          <td>The classic Dunning-Kruger peak ... very sure, not very right.</td>
+        </tr>
+        <tr>
+          <td class="badge-name">Confidently Wrong</td>
+          <td>accuracy &lt; 40 <strong>and</strong> confidence &ge; 75</td>
+          <td>Even surer, even less right ... peak overconfidence.</td>
+        </tr>
+        <tr>
+          <td class="badge-name">Lucky Guesser</td>
+          <td>accuracy &gt; 70 <strong>and</strong> confidence &lt; 50</td>
+          <td>You scored high while doubting yourself ... underconfident, possibly lucky.</td>
+        </tr>
+        <tr>
+          <td class="badge-name">Average Thinker</td>
+          <td>none of the above</td>
+          <td>The default when no specific pattern fits.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p><strong>How to read it:</strong> The rules are checked in order, so the first matching condition wins. The badges aren&rsquo;t a leaderboard; they&rsquo;re a mirror. &ldquo;Mount Stupid Climber&rdquo; and &ldquo;Confidently Wrong&rdquo; sit on the overconfident end, &ldquo;Lucky Guesser&rdquo; sits on the underconfident end, &ldquo;Humble Genius&rdquo; and &ldquo;Grounded Learner&rdquo; are the well-calibrated middle, and &ldquo;Average Thinker&rdquo; catches everything in between. On the Stats screen these accumulate as collectable stamps, so you can see which persona you earn most often.</p>
+
+    <div class="example">
+      <p class="example-label">Example</p>
+      <p>A session with 45% accuracy and 85% confidence fails the Humble Genius and Grounded Learner checks, then matches <strong>Mount Stupid Climber</strong> (accuracy &le; 50, confidence &ge; 70) ... so that&rsquo;s the badge, even though it also satisfies Confidently Wrong&rsquo;s confidence half.</p>
+    </div>
+
+    <div class="faq-note">
+      <p><strong>Note:</strong> Two badge systems coexist. The <em>per-session</em> badge above is what you see on the result card and what accumulates as stamps. The Stats screen header also shows a separate, coarser &ldquo;headline persona&rdquo; derived from your lifetime counts. They share names but are computed differently; the per-session badge is the one most surfaces use.</p>
+    </div>
+
+    <!-- ── Streaks ── -->
+    <h2 id="streaks">Current &amp; Longest Streak</h2>
+
+    <h3>Current streak</h3>
+    <p>How many days in a row you&rsquo;ve shown up ... the count of consecutive days, ending today (or yesterday), on which you finished the daily Question of the Day. A day &ldquo;counts&rdquo; only when a QOD session is actually <em>completed</em>; starting one isn&rsquo;t enough.</p>
+
+    <p>A day is <strong>credited</strong> if you played it <strong>or</strong> it was bridged by a <a href="#streak-freezes">streak freeze</a>. Only <em>played</em> days add to the count; frozen days bridge the gap without incrementing it. Your streak is alive as long as today or yesterday is credited. Miss a day with no freeze to cover it, and the run lapses to 0. Practice (non-QOD) quizzes don&rsquo;t pad it ... only the daily question keeps a streak going.</p>
+
+    <div class="example">
+      <p class="example-label">Example</p>
+      <p>You play Mon, Tue, Wed, skip Thu (no freeze), then play Fri. On Friday your current streak is <strong>1</strong> ... the Thursday miss broke the Mon&ndash;Wed run, and Friday starts a fresh one.</p>
+    </div>
+
+    <h3>Longest streak</h3>
+    <p>Your personal best ... the longest run of consecutive credited days you have ever achieved, anywhere in your history. This only ever goes up or stays flat ... it&rsquo;s the high-water mark, not your current run.</p>
+
+    <div class="example">
+      <p class="example-label">Example</p>
+      <p>You once played 12 days straight, then lapsed. Even with a current streak of 2 today, your longest streak still reads <strong>12</strong>.</p>
+    </div>
+
+    <!-- ── Streak freezes ── -->
+    <h2 id="streak-freezes">Streak Freezes</h2>
+    <p>A streak freeze is a &ldquo;skip day&rdquo; ticket: spend one to bridge a missed day so your streak survives. A spent freeze doesn&rsquo;t add to your streak count; it just keeps the existing run alive across the missed day.</p>
+
+    <h3>How the allowance works</h3>
+    <ul>
+      <li><strong>Free users:</strong> A small fixed <strong>lifetime</strong> allowance (one save, by default). It&rsquo;s available from day one with no streak requirement. Once that&rsquo;s spent, the app invites you to upgrade.</li>
+      <li><strong>Premium users:</strong> <strong>One freeze per calendar week</strong> (Monday-based), no streak requirement, with a wallet cap of <strong>4</strong>. Unused tickets bank up to that cap, so you can build a small buffer but not stockpile indefinitely.</li>
+    </ul>
+
+    <h3>Streak at risk</h3>
+    <p>When you miss a day, the app can show you the streak a freeze could still rescue ... the consecutive run ending at your most recently <em>played</em> day. Once a miss has already dropped your current streak to 0, this value still holds the run a freeze would restore, so the offer can show you exactly what&rsquo;s on the line.</p>
+
+    <div class="example">
+      <p class="example-label">Example</p>
+      <p>You played a 6-day run ending Wednesday, then missed Thursday. On Friday your current streak is 0, but your streak-at-risk is <strong>6</strong> ... and spending a freeze on Thursday would bring that 6-day run back to life.</p>
+    </div>
+
+    <!-- ── 30-day logbook ── -->
+    <h2 id="logbook">30-Day Logbook</h2>
+    <p>A strip of the last 30 days showing, for each day, whether you played and how calibrated you were ... your recent consistency at a glance. Each cell is one day, oldest on the left, today on the right.</p>
+
+    <p>For each of the last 30 days, the app looks at that day&rsquo;s most recent finished daily session and classifies it:</p>
+    <ul>
+      <li><strong>Well-calibrated</strong> when |confidence &minus; accuracy| &le; 15</li>
+      <li><strong>Played</strong> when you finished a session but the gap was larger than 15</li>
+      <li><strong>Missed</strong> when no session finished that day</li>
+    </ul>
+
+    <p><strong>How to read it:</strong> This is your habit tracker plus a calibration heat-strip. A day shaded as well-calibrated means your confidence and accuracy were within 15 points of each other ... tight. A plain &ldquo;played&rdquo; day means you showed up but were further off. Tapping a day surfaces that session&rsquo;s result.</p>
+
+    <div class="faq-note">
+      <p><strong>Note:</strong> The logbook uses an <em>absolute</em> 15-point window, not the signed gap. For this strip the app only cares <em>how close</em> you were, not which direction you erred, so a +15 day and a &minus;15 day are both &ldquo;well-calibrated&rdquo; here.</p>
+    </div>
+
+    <!-- ── Per-category gaps ── -->
+    <h2 id="category-gaps">Per-Category Gaps (Category Insights)</h2>
+    <p>Where your overconfidence and underconfidence actually live ... your calibration gap broken down by question category, so you can see, say, that you&rsquo;re cocky about History but too modest about Science. Powers the &ldquo;INSIGHT&rdquo; footnote on Home.</p>
+
+    <div class="formula">avg gap = average of (confidence &minus; 100 &times; isCorrect) per category, rounded to a whole number</div>
+
+    <p>Same signed convention as the overall gap: <strong>positive = overconfident</strong>, <strong>negative = underconfident</strong>. Categories with fewer than 3 answers are hidden (too little data to be meaningful), and the surviving categories are ranked by the <em>size</em> of the gap (largest first).</p>
+
+    <div class="example">
+      <p class="example-label">Example</p>
+      <p>With &ldquo;History +18&rdquo; and &ldquo;Science &minus;12&rdquo; both above the 3-answer floor, the Home insight reads: &ldquo;You&rsquo;re most overconfident on History (avg gap +18 pts). You&rsquo;re most underconfident on Science (avg gap &minus;12 pts).&rdquo;</p>
+    </div>
+
+    <!-- ── Calibration counters ── -->
+    <h2 id="counters">Calibration Counters</h2>
+    <p>Tallies of standout single answers ... how many times you&rsquo;ve been notably overconfident, notably underconfident, or at the two extremes. These feed the lifetime persona and some badge logic. Each counter is checked <em>per answered question</em>:</p>
+
+    <ul>
+      <li><strong>Overconfident</strong> ... confidence &ge; 80 and the answer was <strong>wrong</strong></li>
+      <li><strong>Underconfident</strong> ... confidence &le; 40 and the answer was <strong>right</strong></li>
+      <li><strong>Mount Stupid</strong> ... confidence &ge; 95 and the answer was <strong>wrong</strong> (extreme overconfidence)</li>
+      <li><strong>Humble Genius</strong> ... confidence &le; 25 and the answer was <strong>right</strong> (extreme underconfidence)</li>
+    </ul>
+
+    <p><strong>How to read it:</strong> &ldquo;Overconfident&rdquo; and &ldquo;Mount Stupid&rdquo; sit on the cocky side (sure but wrong); &ldquo;Underconfident&rdquo; and &ldquo;Humble Genius&rdquo; sit on the modest side (right but doubtful). The two extreme counts are stricter, near-the-edge versions of the milder counts. The app compares your overconfident vs. underconfident totals to decide your lifetime leaning persona.</p>
+
+    <div class="example">
+      <p class="example-label">Example</p>
+      <p>Answering a question wrong while 95% sure adds 1 to <em>both</em> your overconfident count (&ge; 80, wrong) and your Mount Stupid count (&ge; 95, wrong).</p>
+    </div>
+
+    <!-- ── Lifetime averages ── -->
+    <h2 id="lifetime">Lifetime Averages</h2>
+    <p>Your all-time session scoreboard ... your average accuracy, confidence, and competence taken across every quiz session you&rsquo;ve ever completed, plus the total number of sessions.</p>
+
+    <div class="formula">average quiz accuracy = (sum of each session's accuracy %) &divide; (number of sessions)<br>average quiz confidence = (sum of each session's avg confidence) &divide; (number of sessions)<br>average quiz competence = (sum of each session's competence %) &divide; (number of sessions)<br>total quiz sessions = count of every completed session</div>
+
+    <p><strong>How to read it:</strong> These are <em>session-weighted</em> averages ... each session counts once, regardless of how many questions it held.</p>
+
+    <div class="faq-note">
+      <p><strong>Note:</strong> The per-answer averages (Stats &ldquo;OVERALL&rdquo; block: AVG CONFIDENCE, ACCURACY, AVG GAP) weight each <em>question</em> equally, while these session averages weight each <em>session</em> equally. With sessions of differing lengths the two can differ slightly ... that&rsquo;s expected, not a bug.</p>
+    </div>
+
+    <!-- ── Analytics tiers ── -->
+    <h2 id="analytics-tiers">Analytics Tiers</h2>
+    <p>Coarse, privacy-safe buckets the app uses internally to understand how its players are doing in aggregate. These are not raw numbers and are deliberately blurred so they can never single out an individual.</p>
+
+    <ul>
+      <li><strong>Calibration tier</strong> ... from gap = confidence &minus; accuracy (signed): &gt; 10 &rarr; <em>overconfident</em>, &lt; &minus;10 &rarr; <em>underconfident</em>, otherwise <em>well-calibrated</em>.</li>
+      <li><strong>Streak bucket</strong> ... 0, 1&ndash;3, 4&ndash;7, 8&ndash;14, 15&ndash;30, or 31+.</li>
+      <li><strong>Total-played bucket</strong> ... 0, 1&ndash;9, 10&ndash;49, 50&ndash;99, or 100+.</li>
+    </ul>
+
+    <p><strong>How to read it:</strong> These are segmentation labels, not scores you chase. The calibration tier is the same overconfident / well-calibrated / underconfident idea as everywhere else, just with a &plusmn;10-point dead zone around perfect.</p>
+
+    <div class="faq-note">
+      <p><strong>Note:</strong> The calibration tier&rsquo;s dead zone is &plusmn;10. This is a slightly different threshold from the Home calibration <em>grade</em> (which uses an absolute-gap ladder: under 10 = A, under 20 = B+, under 30 = B, under 40 = C, else D). Both describe &ldquo;how calibrated are you,&rdquo; but the analytics tier keeps the sign and uses a single &plusmn;10 cutoff, while the on-screen grade ignores sign and uses graduated bands.</p>
+    </div>
+
+    <!-- ── Closing essay ── -->
+    <h2 id="why-calibration">Calibration vs. Accuracy ... Why This App Cares About the Gap</h2>
+    <p>Accuracy answers &ldquo;how much did you get right?&rdquo; Calibration answers a deeper question: &ldquo;did you <em>know</em> what you knew?&rdquo; You can be highly accurate and badly calibrated (acing a quiz while feeling unsure ... the Lucky Guesser), or quite inaccurate and badly calibrated in the other direction (confidently bombing it ... the Mount Stupid Climber). The two are independent, and that independence is exactly what the Dunning-Kruger effect is about.</p>
+
+    <p>The original Dunning-Kruger finding wasn&rsquo;t &ldquo;dumb people are confident.&rdquo; It was subtler: across many skills, the people who performed <em>worst</em> were the least able to <em>recognise</em> that they&rsquo;d performed badly, because the very knowledge needed to do well is the same knowledge needed to judge your own performance. Confidence and competence drift apart most at the bottom. Meanwhile genuine experts often <em>underestimate</em> themselves, assuming what feels easy to them is easy for everyone.</p>
+
+    <p>DK Derby turns that into a game by separating the two scores and then measuring the gap between them. Accuracy alone would just be a trivia quiz. By asking you to commit to a confidence <em>before</em> you find out, and then showing you the signed gap, the app trains the rarer and more valuable skill: an honest sense of the edges of your own knowledge. A well-calibrated person isn&rsquo;t necessarily the smartest in the room ... they&rsquo;re the one who knows, in the moment, whether they&rsquo;re right.</p>
+
+    <p>That&rsquo;s the climb down from Mount Stupid, and the number that tracks it is your calibration gap.</p>
+
+    <!-- Closing -->
+    <div class="faq-closing">
+      <p>DK Derby is built on peer-reviewed science. Designed to humble you, gently. If something here doesn&rsquo;t match what you see in the app, <a href="support.html">let us know</a>.</p>
+    </div>
+  </main>
+
+  <!-- ===== FOOTER (extracted from main page) ===== -->
+  <footer style="border-top: 1px solid var(--rule); background: var(--paperDeep); line-height: normal;">
+    <div class="wrap" style="padding: 34px 40px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between;">
+      <div style="display:flex; align-items:baseline; gap:16px;">
+        <a href="index.html" style="font-family:var(--mono); font-size:14px; letter-spacing:3px; font-weight:700; color:var(--ink); text-decoration:none;">DK·DERBY</a>
+        <span style="font-family:var(--mono); font-size:11px; letter-spacing:1.5px; color:var(--inkMuted);">COMING SOON</span>
+      </div>
+      <div style="display:flex; gap:22px; flex-wrap:wrap; font-family:var(--mono); font-size:12px; letter-spacing:0.5px;">
+        <a href="privacy.html" style="color:var(--inkSoft); text-decoration:none;">Privacy</a>
+        <a href="terms.html" style="color:var(--inkSoft); text-decoration:none;">Terms</a>
+        <a href="support.html" style="color:var(--inkSoft); text-decoration:none;">Support</a>
+        <a href="faq.html" style="color:var(--inkSoft); text-decoration:none;">FAQ</a>
+        <a href="https://www.98chimp.ca" style="color:var(--inkSoft); text-decoration:none;">98chimp.ca</a>
+      </div>
+      <div style="font-family:var(--mono); font-size:11px; letter-spacing:0.5px; color:var(--inkMuted); text-align:center;">
+        &copy; 2015&ndash;2026 98% Chimp Inc. &middot; Made in Canada<img src="assets/maple.svg" alt="Maple leaf" style="display:inline-block; width:14px; height:14px; vertical-align:middle; margin-left:4px;">
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Detect app mode from query parameter (?app)
+    if (new URLSearchParams(window.location.search).has('app')) {
+      document.body.classList.add('app-mode');
+    }
+  </script>
+</body>
+</html>

@@ -230,6 +230,17 @@ document.addEventListener('DOMContentLoaded', async function() {
       '      a.parentElement.insertBefore(sup, a.nextSibling);' +
       '    }' +
       '  });' +
+      '  /* 4b. Inject FAQ link into footer nav (after Support) */' +
+      '  var _footerLinks2 = document.querySelectorAll("footer a");' +
+      '  _footerLinks2.forEach(function(a){' +
+      '    if (a.textContent.trim() === "Support" && a.href.indexOf("support.html") !== -1 && !a.parentElement.querySelector("[href=\\"faq.html\\"]")) {' +
+      '      var faqLink = document.createElement("a");' +
+      '      faqLink.href = "faq.html";' +
+      '      faqLink.textContent = "FAQ";' +
+      '      faqLink.style.cssText = a.style.cssText;' +
+      '      a.parentElement.insertBefore(faqLink, a.nextSibling);' +
+      '    }' +
+      '  });' +
       '  /* 5. Maple leaf next to "Made in Canada" — single injection only */' +
       '  var _found = false;' +
       '  document.querySelectorAll("a, span, div, p").forEach(function(el){' +
